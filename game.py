@@ -33,6 +33,7 @@ class Game(abc.ABC):
     def add_player(self, name):
         self.player_count += 1
         player = Player(self, f"{self.player_count} - {name}")
+        self.players.append(player)
         return player
 
     """Abstract method for running game loop"""
