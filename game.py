@@ -66,8 +66,8 @@ class BlackJack(Game):
     def run_game(self):
 
         self.add_player("John")
-        self.add_player("Jack")
-        self.add_player("Jane")
+        # self.add_player("Jack")
+        # self.add_player("Jane")
 
         while (True):
             """Event Loop"""

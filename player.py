@@ -69,7 +69,10 @@ class Dealer(Player):
 
         dealer = Square(x,
                         y, size, (200, 200, 0), self.name, font_size)
+        cards = Square(x,
+                       y + 200, size, (200, 200, 0), str(self.get_hand()), font_size)
         dealer.draw(self.screen)
+        cards.draw(self.screen)
 
 
 class Table(Player):
