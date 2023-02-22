@@ -1,6 +1,9 @@
 import pygame
 
 
+from square import Square
+
+
 class Player:
     def __init__(self, game, name=""):
         """Pygame init"""
@@ -16,17 +19,12 @@ class Player:
         return f"Player({self.name})"
 
     def draw(self):
-        self.draw_rect()
-        self.draw_label(f"{self.name}")
-
-    def draw_rect(self):
-        pygame.draw.rect(self.screen, (200, 50, 50),
-                         pygame.Rect(50, 50, 60, 60))
-
-    def draw_label(self, label):
-        text = self.game.font.render(label,
-                                     True, (100, 100, 100))
-        self.game.screen.blit(text, (100, 200))
+        """Single player + dealer"""
+        if (len(self.game.players) == 2):
+            """Draw player in center"""
+            square = Square(1200 // 2,
+                            800 - 100, 50, (255, 0, 0), self.name, 20)
+            square.draw(self.screen)
 
     """Adds a single card to players hand"""
 
