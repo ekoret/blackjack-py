@@ -61,22 +61,15 @@ class Dealer(Player):
     def __str__(self):
         return f"Dealer({self.name})"
 
-    """The dealer always sits at the same place"""
-
     def draw(self):
-        self.draw_rect()
-        self.draw_label("Dealer")
+        x = self.game.settings.screen_width // 2
+        y = 125
+        size = 75
+        font_size = 20
 
-    def draw_rect(self):
-        pygame.draw.rect(self.screen, (200, 50, 50),
-                         pygame.Rect(self.game.settings.screen_width / 2, 50, 60, 60))
-
-    def draw_label(self, label):
-        text = self.game.font.render(label,
-                                     True, (255, 255, 255))
-        x = self.game.settings.screen_width / 2
-        y = 80
-        self.game.screen.blit(text, (x, y))
+        dealer = Square(x,
+                        y, size, (200, 200, 0), self.name, font_size)
+        dealer.draw(self.screen)
 
 
 class Table(Player):

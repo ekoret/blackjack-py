@@ -65,9 +65,9 @@ class BlackJack(Game):
 
     def run_game(self):
 
-        john = self.add_player("John")
-        jack = self.add_player("Jack")
-        jane = self.add_player("Jane")
+        self.add_player("John")
+        self.add_player("Jack")
+        self.add_player("Jane")
 
         while (True):
             """Event Loop"""
@@ -78,9 +78,8 @@ class BlackJack(Game):
             """Pygame function and method calls"""
             self.screen.fill(self.settings.bg_colour)  # bg
 
+            """Draw players and dealer"""
             self.dealer.draw()
-            # john.draw()
-            # jack.draw()
             self.draw_players()
 
             pygame.display.flip()
