@@ -15,7 +15,6 @@ from settings import BlackjackSettings
 class Game(abc.ABC):
     def __init__(self):
         """Pygame init"""
-        self.pygame_instance = pygame
         self.clock = pygame.time.Clock()  # framerate
         pygame.font.init()
         self.font = pygame.font.SysFont('Arial', 20)
