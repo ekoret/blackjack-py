@@ -18,12 +18,15 @@ class Player:
         return f"Player({self.name})"
 
     def draw(self, x, colour):
-        y = 800 - 125
+        y = self.game.settings.screen_height - 200
         size = 75
         font_size = 20
 
         player = Square(x,
                         y, size, colour, self.name, font_size)
+        cards = Square(
+            x, y + 25, 75, self.game.settings.bg_colour, self.get_hand(), 20)
+        cards.draw(self.screen)
         player.draw(self.screen)
 
     """Adds a single card to players hand"""
@@ -69,9 +72,9 @@ class Dealer(Player):
         dealer = Square(x,
                         y, size, (200, 200, 0), self.name, font_size)
         cards = Square(x,
-                       y + 200, size, (200, 200, 0), str(self.get_hand()), font_size)
-        dealer.draw(self.screen)
+                       y + 25, size, self.game.settings.bg_colour, self.get_hand(), font_size)
         cards.draw(self.screen)
+        dealer.draw(self.screen)
 
 
 class Table(Player):
@@ -82,3 +85,10 @@ class Table(Player):
 
     def __str__(self):
         return f"Table({self.name})"
+
+    def draw(self):
+        x = self.game.settings.screen_width // 2
+        y = self.game.settings.screen_height // 2
+
+        table = Square(x, y, 100, (77, 25, 0), self.get_hand(), 20)
+        table.draw(self.screen)

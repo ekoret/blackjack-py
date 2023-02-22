@@ -64,10 +64,10 @@ class BlackJack(Game):
     """The game loop"""
 
     def run_game(self):
-
         self.add_player("John")
-        # self.add_player("Jack")
-        # self.add_player("Jane")
+        self.add_player("Jack")
+        self.add_player("Jane")
+        self.deal_game()
 
         while (True):
             """Event Loop"""
@@ -81,6 +81,7 @@ class BlackJack(Game):
             """Draw players and dealer"""
             self.dealer.draw()
             self.draw_players()
+            self.table.draw()
 
             pygame.display.flip()
             self.clock.tick(self.framerate)  # set the framerate
@@ -110,10 +111,9 @@ class BlackJack(Game):
     """Method for dealing the Blackjack game"""
 
     def deal_game(self):
-
         # adds cards to players first then table
-        for _ in range(self._deal):
-            for player in self.player_list:
+        for _ in range(self.amount_to_deal):
+            for player in self.players:
                 player.add_card(self.deck.deal_card())
 
         self.table.add_card(self.deck.deal_card())
