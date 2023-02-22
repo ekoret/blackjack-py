@@ -66,7 +66,7 @@ class BlackJack(Game):
     def run_game(self):
 
         john = self.add_player("John")
-        # jack = self.add_player("Jack")
+        jack = self.add_player("Jack")
 
         while (True):
             """Event Loop"""
@@ -86,10 +86,18 @@ class BlackJack(Game):
             self.clock.tick(self.framerate)  # set the framerate
 
     def draw_players(self):
-        if (len(self.players) == 2):
+        total_players = len(self.players)
+        if (total_players == 2):
             """Draw player in center"""
             player1 = self.players[1]
             player1.draw(self.settings.screen_width // 2, (255, 0, 0))
+
+        elif (total_players == 3):
+            player1 = self.players[1]
+            player2 = self.players[2]
+            player1.draw((self.settings.screen_width // 2) // 2, (255, 0, 0))
+            player2.draw((self.settings.screen_width // 2) +
+                         (self.settings.screen_width // 2) // 2, (0, 0, 255))
 
     """Method for dealing the Blackjack game"""
 
