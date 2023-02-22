@@ -66,6 +66,7 @@ class BlackJack(Game):
     def run_game(self):
 
         john = self.add_player("John")
+        # jack = self.add_player("Jack")
 
         while (True):
             """Event Loop"""
@@ -77,10 +78,18 @@ class BlackJack(Game):
             self.screen.fill(self.settings.bg_colour)  # bg
 
             self.dealer.draw()
-            john.draw()
+            # john.draw()
+            # jack.draw()
+            self.draw_players()
 
             pygame.display.flip()
             self.clock.tick(self.framerate)  # set the framerate
+
+    def draw_players(self):
+        if (len(self.players) == 2):
+            """Draw player in center"""
+            player1 = self.players[1]
+            player1.draw(self.settings.screen_width // 2, (255, 0, 0))
 
     """Method for dealing the Blackjack game"""
 

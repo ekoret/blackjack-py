@@ -18,13 +18,14 @@ class Player:
     def __str__(self):
         return f"Player({self.name})"
 
-    def draw(self):
-        """Single player + dealer"""
-        if (len(self.game.players) == 2):
-            """Draw player in center"""
-            square = Square(1200 // 2,
-                            800 - 100, 50, (255, 0, 0), self.name, 20)
-            square.draw(self.screen)
+    def draw(self, x, colour):
+        y = 800 - 125
+        size = 75
+        font_size = 20
+
+        player = Square(x,
+                        y, size, colour, self.name, font_size)
+        player.draw(self.screen)
 
     """Adds a single card to players hand"""
 
