@@ -67,6 +67,7 @@ class BlackJack(Game):
 
         john = self.add_player("John")
         jack = self.add_player("Jack")
+        jane = self.add_player("Jane")
 
         while (True):
             """Event Loop"""
@@ -98,6 +99,14 @@ class BlackJack(Game):
             player1.draw((self.settings.screen_width // 2) // 2, (255, 0, 0))
             player2.draw((self.settings.screen_width // 2) +
                          (self.settings.screen_width // 2) // 2, (0, 0, 255))
+
+        elif (total_players == 4):
+            player1 = self.players[1]
+            player1.draw(self.settings.screen_width // 9, (255, 0, 0))
+            player2 = self.players[2]
+            player2.draw(self.settings.screen_width // 2, (0, 0, 255))
+            player3 = self.players[3]
+            player3.draw(self.settings.screen_width - 200, (0, 255, 0))
 
     """Method for dealing the Blackjack game"""
 
