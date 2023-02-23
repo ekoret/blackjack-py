@@ -10,6 +10,7 @@ import pygame
 from deck import Deck
 from player import Dealer, Table, Player
 from settings import Settings, BlackjackSettings
+from game_button import GameButton
 
 """Abstract Game class"""
 
@@ -70,20 +71,27 @@ class BlackJack(Game):
         self.add_player("Jane")
         self.deal_game()
 
+        button = GameButton(100, 100, 200, 100, "Hello", 20,
+                            "Arial", (230, 10, 10), (50, 50, 230))
+
         while (True):
             """Event Loop"""
             for event in pygame.event.get():
                 if (event.type == pygame.QUIT):
                     sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Check if the button was clicked
+                    if button.is_clicked(pygame.mouse.get_pos()):
+                        print("Button clicked!")
 
             self.screen.fill(self.bg_colour)  # draw bg
 
             """Draw players and dealer"""
             self.draw_players()
+            button.draw(self.screen)
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
-
     """
     TODO: needs to be refactored
         - put players in positions depending on amount of players
