@@ -7,7 +7,6 @@ class Player:
     def __init__(self, game, name=""):
         """Pygame init"""
         self.game = game
-        self.screen = game.screen
 
         """Self init"""
         self.name = name
@@ -25,9 +24,9 @@ class Player:
         player = Square(x,
                         y, size, colour, self.name, font_size)
         cards = Square(
-            x, y + 25, 75, self.game.settings.bg_colour, self.get_hand(), 20)
-        cards.draw(self.screen)
-        player.draw(self.screen)
+            x, y + 25, 75, self.game.bg_colour, self.get_hand(), 20)
+        cards.draw(self.game.screen)
+        player.draw(self.game.screen)
 
     """Adds a single card to players hand"""
 
@@ -72,9 +71,9 @@ class Dealer(Player):
         dealer = Square(x,
                         y, size, (200, 200, 0), self.name, font_size)
         cards = Square(x,
-                       y + 25, size, self.game.settings.bg_colour, self.get_hand(), font_size)
-        cards.draw(self.screen)
-        dealer.draw(self.screen)
+                       y + 25, size, self.game.bg_colour, self.get_hand(), font_size)
+        cards.draw(self.game.screen)
+        dealer.draw(self.game.screen)
 
 
 class Table(Player):
@@ -91,7 +90,7 @@ class Table(Player):
         y = self.game.settings.screen_height // 2
 
         table = Square(x, y, 100, (77, 25, 0), self.get_hand(), 20)
-        table.draw(self.screen)
+        table.draw(self.game.screen)
 
     def draw_remaining_cards(self):
         x = 500
@@ -104,8 +103,8 @@ class Table(Player):
         first_half = '  '.join(remaining_cards[:remaining_deck_total // 2])
         second_half = '  '.join(remaining_cards[remaining_deck_total // 2:])
         remaining_cards_first = Square(
-            x, y, 100, self.game.settings.bg_colour, first_half, 20)
+            x, y, 100, self.game.bg_colour, first_half, 20)
         remaining_cards_second = Square(
-            x, y - 20, 100, self.game.settings.bg_colour, second_half, 20)
-        remaining_cards_first.draw(self.screen)
-        remaining_cards_second.draw(self.screen)
+            x, y + 20, 100, self.game.bg_colour, second_half, 20)
+        remaining_cards_first.draw(self.game.screen)
+        remaining_cards_second.draw(self.game.screen)
