@@ -3,9 +3,6 @@
 import abc
 
 
-import pygame
-
-
 """Abstract Settings class"""
 
 
@@ -45,8 +42,6 @@ class BlackjackSettings(Settings):
         """Blackjack specific attributes"""
         self.amount_to_deal = 2
         self.moves = ["Hit", "Pass", "Split", "Double", "Fold"]
-        self._screen = pygame.display.set_mode(
-            (self._screen_width, self._screen_height))
 
     """Getter for screen width"""
     @property

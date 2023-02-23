@@ -52,8 +52,9 @@ class Game(abc.ABC):
 class BlackJack(Game):
     def __init__(self):
         self.settings = BlackjackSettings()
-        self.screen = self.settings.screen
         super().__init__()
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height))
         """Pygame init"""
         self.bg_colour = self.settings.bg_colour
 
@@ -76,7 +77,7 @@ class BlackJack(Game):
                     sys.exit()
 
             """Pygame function and method calls"""
-            self.screen.fill(self.settings.bg_colour)  # bg
+            self.screen.fill(self.bg_colour)  # bg
 
             """Draw players and dealer"""
             self.dealer.draw()
