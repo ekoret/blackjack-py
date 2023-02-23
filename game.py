@@ -82,6 +82,7 @@ class BlackJack(Game):
             self.dealer.draw()
             self.draw_players()
             self.table.draw()
+            self.table.draw_remaining_cards()
 
             pygame.display.flip()
             self.clock.tick(self.framerate)  # set the framerate

@@ -92,3 +92,20 @@ class Table(Player):
 
         table = Square(x, y, 100, (77, 25, 0), self.get_hand(), 20)
         table.draw(self.screen)
+
+    def draw_remaining_cards(self):
+        x = 500
+        y = 200
+
+        remaining_cards = self.game.deck.get_remaining_cards()
+        remaining_deck_total = len(remaining_cards)
+
+        """TODO: needs to be refactored"""
+        first_half = '  '.join(remaining_cards[:remaining_deck_total // 2])
+        second_half = '  '.join(remaining_cards[remaining_deck_total // 2:])
+        remaining_cards_first = Square(
+            x, y, 100, self.game.settings.bg_colour, first_half, 20)
+        remaining_cards_second = Square(
+            x, y - 20, 100, self.game.settings.bg_colour, second_half, 20)
+        remaining_cards_first.draw(self.screen)
+        remaining_cards_second.draw(self.screen)
