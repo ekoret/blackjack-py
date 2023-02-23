@@ -1,3 +1,5 @@
+"""Module for handling all game types"""
+
 import abc
 import sys
 
@@ -14,13 +16,11 @@ from settings import BlackjackSettings
 
 class Game(abc.ABC):
     def __init__(self):
-        """Pygame init"""
         self.clock = pygame.time.Clock()  # framerate
         pygame.font.init()
         self.font = pygame.font.SysFont('Arial', 20)
         self.framerate = 30
 
-        """Self init"""
         self.deck = Deck()
         self.dealer = Dealer(self)
         self.table = Table(self)
@@ -51,14 +51,13 @@ class Game(abc.ABC):
 
 class BlackJack(Game):
     def __init__(self):
-        self.settings = BlackjackSettings()
         super().__init__()
+
+        self.settings = BlackjackSettings()
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
-        """Pygame init"""
-        self.bg_colour = self.settings.bg_colour
 
-        """Self init"""
+        self.bg_colour = self.settings.bg_colour
         self.amount_to_deal = self.settings.amount_to_deal
         self.moves = self.settings.moves
 
@@ -76,19 +75,22 @@ class BlackJack(Game):
                 if (event.type == pygame.QUIT):
                     sys.exit()
 
-            """Pygame function and method calls"""
-            self.screen.fill(self.bg_colour)  # bg
+            self.screen.fill(self.bg_colour)  # draw bg
 
             """Draw players and dealer"""
-            self.dealer.draw()
             self.draw_players()
-            self.table.draw()
-            self.table.draw_remaining_cards()
 
-            pygame.display.flip()
+            pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
 
+    """TODO: needs to be refactored"""
+
     def draw_players(self):
+        self.dealer.draw()
+
+        self.table.draw()
+        self.table.draw_remaining_cards()
+
         total_players = len(self.players)
         if (total_players == 2):
             """Draw player in center"""
