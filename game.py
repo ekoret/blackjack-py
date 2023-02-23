@@ -78,6 +78,7 @@ class BlackJack(Game):
             """Event Loop"""
             for event in pygame.event.get():
                 if (event.type == pygame.QUIT):
+                    pygame.quit()
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     # Check if the button was clicked
