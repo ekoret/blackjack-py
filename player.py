@@ -1,6 +1,5 @@
 
 from game_text import GameText
-from square import Square
 
 
 class Player:
