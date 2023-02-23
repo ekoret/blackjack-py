@@ -1,5 +1,5 @@
 
-
+from game_text import GameText
 from square import Square
 
 
@@ -18,15 +18,12 @@ class Player:
 
     def draw(self, x, colour):
         y = self.game.settings.screen_height - 200
-        size = 75
-        font_size = 20
 
-        player = Square(x,
-                        y, size, colour, self.name, font_size)
-        cards = Square(
-            x, y + 25, 75, self.game.bg_colour, self.get_hand(), 20)
-        cards.draw(self.game.screen)
-        player.draw(self.game.screen)
+        player_label = GameText(self.name)
+        cards_label = GameText(self.get_hand())
+
+        cards_label.draw(self.game.screen, x, y + 20)
+        player_label.draw(self.game.screen, x, y)
 
     """Adds a single card to players hand"""
 
@@ -65,15 +62,12 @@ class Dealer(Player):
     def draw(self):
         x = self.game.settings.screen_width // 2
         y = 125
-        size = 75
-        font_size = 20
 
-        dealer = Square(x,
-                        y, size, (200, 200, 0), self.name, font_size)
-        cards = Square(x,
-                       y + 25, size, self.game.bg_colour, self.get_hand(), font_size)
-        cards.draw(self.game.screen)
-        dealer.draw(self.game.screen)
+        dealer_label = GameText("Dealer")
+        player_cards_label = GameText(self.get_hand())
+
+        player_cards_label.draw(self.game.screen, x, y + 20)
+        dealer_label.draw(self.game.screen, x, y)
 
 
 class Table(Player):
@@ -89,11 +83,13 @@ class Table(Player):
         x = self.game.settings.screen_width // 2
         y = self.game.settings.screen_height // 2
 
-        table = Square(x, y, 100, (77, 25, 0), self.get_hand(), 20)
-        table.draw(self.game.screen)
+        table_label = GameText("Table")
+        table_cards_label = GameText(self.get_hand())
+        table_label.draw(self.game.screen, x, y)
+        table_cards_label.draw(self.game.screen, x, y + 20)
 
     def draw_remaining_cards(self):
-        x = 500
+        x = 300
         y = 200
 
         remaining_cards = self.game.deck.get_remaining_cards()
@@ -102,9 +98,9 @@ class Table(Player):
         """TODO: needs to be refactored"""
         first_half = '  '.join(remaining_cards[:remaining_deck_total // 2])
         second_half = '  '.join(remaining_cards[remaining_deck_total // 2:])
-        remaining_cards_first = Square(
-            x, y, 100, self.game.bg_colour, first_half, 20)
-        remaining_cards_second = Square(
-            x, y + 20, 100, self.game.bg_colour, second_half, 20)
-        remaining_cards_first.draw(self.game.screen)
-        remaining_cards_second.draw(self.game.screen)
+
+        remaining_cards_first = GameText(first_half)
+        remaining_cards_second = GameText(second_half)
+
+        remaining_cards_first.draw(self.game.screen, x, y)
+        remaining_cards_second.draw(self.game.screen, x, y + 20)
