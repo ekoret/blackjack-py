@@ -92,23 +92,17 @@ class BlackJack(Game):
         total_players = len(self.players)
         if (total_players == 2):
             """Draw player in center"""
-            player1 = self.players[1]
-            player1.draw(self.settings.screen_width // 2, (255, 0, 0))
+            self.players[1].draw(self.settings.screen_width // 2)
 
         elif (total_players == 3):
-            player1 = self.players[1]
-            player2 = self.players[2]
-            player1.draw((self.settings.screen_width // 2) // 2, (255, 0, 0))
-            player2.draw((self.settings.screen_width // 2) +
-                         (self.settings.screen_width // 2) // 2, (0, 0, 255))
+            self.players[1].draw((self.settings.screen_width // 2) // 2)
+            self.players[2].draw((self.settings.screen_width // 2) +
+                                 (self.settings.screen_width // 2) // 2)
 
         elif (total_players == 4):
-            player1 = self.players[1]
-            player1.draw(self.settings.screen_width // 9, (255, 0, 0))
-            player2 = self.players[2]
-            player2.draw(self.settings.screen_width // 2, (0, 0, 255))
-            player3 = self.players[3]
-            player3.draw(self.settings.screen_width - 200, (0, 255, 0))
+            self.players[1].draw(self.settings.screen_width // 9)
+            self.players[2].draw(self.settings.screen_width // 2)
+            self.players[3].draw(self.settings.screen_width - 200)
 
     """Method for dealing the Blackjack game"""
 

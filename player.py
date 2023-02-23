@@ -15,7 +15,7 @@ class Player:
     def __str__(self):
         return f"Player({self.name})"
 
-    def draw(self, x, colour):
+    def draw(self, x):
         y = self.game.settings.screen_height - 200
 
         player_label = GameText(self.name)
