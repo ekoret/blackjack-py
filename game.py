@@ -9,17 +9,18 @@ import pygame
 
 from deck import Deck
 from player import Dealer, Table, Player
-from settings import BlackjackSettings
+from settings import Settings, BlackjackSettings
 
 """Abstract Game class"""
 
 
 class Game(abc.ABC):
     def __init__(self):
+        pygame.init()
+        self.settings = Settings()
         self.clock = pygame.time.Clock()  # framerate
-        pygame.font.init()
-        self.font = pygame.font.SysFont('Arial', 20)
-        self.framerate = 30
+        self.font = pygame.font.SysFont(self.settings.font_name, 20)
+        self.framerate = self.settings.framerate
 
         self.deck = Deck()
         self.dealer = Dealer(self)
