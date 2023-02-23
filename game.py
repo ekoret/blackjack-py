@@ -83,7 +83,10 @@ class BlackJack(Game):
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
 
-    """TODO: needs to be refactored"""
+    """
+    TODO: needs to be refactored
+        - put players in positions depending on amount of players
+    """
 
     def draw_players(self):
         self.dealer.draw()

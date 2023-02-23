@@ -30,7 +30,8 @@ class Player:
         self.hand.append(card)
 
     """Plays a card from the players hand
-    TODO: needs to be refactored to take in an index instead
+    TODO: needs to be refactored
+        - take in an index
     """
 
     def play_card(self, card):
@@ -94,7 +95,10 @@ class Table(Player):
         remaining_cards = self.game.deck.get_remaining_cards()
         remaining_deck_total = len(remaining_cards)
 
-        """TODO: needs to be refactored"""
+        """
+        TODO: needs to be refactored
+            - looks ugly
+        """
         first_half = '  '.join(remaining_cards[:remaining_deck_total // 2])
         second_half = '  '.join(remaining_cards[remaining_deck_total // 2:])
 
