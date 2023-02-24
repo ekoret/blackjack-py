@@ -26,6 +26,7 @@ class Game(abc.ABC):
         self.deck = Deck()
         self.player_count = 0
         self.current_player_turn = 1
+        self.player_menu = PlayerMenu(self)
 
     """Method for adding a player to the game"""
 
@@ -66,7 +67,6 @@ class BlackJack(Game):
         self.moves = self.settings.moves
 
         self.last_update = pygame.time.get_ticks()
-        self.player_menu = PlayerMenu()
 
     """The game loop"""
 
@@ -97,7 +97,7 @@ class BlackJack(Game):
             self.draw_players()
             self.draw_dealer()
             self.table.draw_remaining_cards()
-            self.player_menu.draw(self, current_player)
+            self.player_menu.draw(current_player)
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
