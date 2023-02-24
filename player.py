@@ -1,5 +1,6 @@
 
 from game_text import GameText
+from sprite import DealerSprite
 
 
 class Player:
@@ -55,6 +56,7 @@ class Dealer(Player):
     def __init__(self, game):
         super().__init__(game)
         self.name = "Dealer"
+        self.sprite = DealerSprite()
 
     def __str__(self):
         return f"Dealer({self.name})"
