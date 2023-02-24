@@ -11,6 +11,7 @@ from deck import Deck
 from player import Dealer, Table, Player
 from settings import Settings, BlackjackSettings
 from game_button import GameButton
+from sprite import DealerSprite
 
 """Abstract Game class"""
 
@@ -63,6 +64,8 @@ class BlackJack(Game):
         self.amount_to_deal = self.settings.amount_to_deal
         self.moves = self.settings.moves
 
+        self.last_update = pygame.time.get_ticks()
+
     """The game loop"""
 
     def run_game(self):
@@ -73,6 +76,8 @@ class BlackJack(Game):
 
         button = GameButton(100, 100, 200, 100, "Hello", 20,
                             "Arial", (230, 10, 10), (50, 50, 230))
+
+        bernard = DealerSprite()
 
         while (True):
             """Event Loop"""
@@ -86,6 +91,17 @@ class BlackJack(Game):
                         print("Button clicked!")
 
             self.screen.fill(self.bg_colour)  # draw bg
+
+            """Update Bernard animation"""
+            current_time = pygame.time.get_ticks()
+            if (current_time - self.last_update >= bernard.animation_cooldown):
+                bernard.animations["standing"]["current_frame"] += 1
+                self.last_update = current_time
+                if (bernard.animations["standing"]["current_frame"] >= bernard.animations["standing"]["steps"]):
+                    bernard.animations["standing"]["current_frame"] = 0
+            """Draw bernard"""
+            bernard.draw(
+                self.screen, bernard.animations["standing"]["current_frame"])
 
             """Draw players and dealer"""
             self.draw_players()
