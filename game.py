@@ -117,7 +117,6 @@ class BlackJack(Game):
     def draw_players(self):
         self.dealer.draw()
 
-        self.table.draw()
         self.table.draw_remaining_cards()
 
         total_players = len(self.players)
@@ -138,9 +137,8 @@ class BlackJack(Game):
     """Method for dealing the Blackjack game"""
 
     def deal_game(self):
-        # adds cards to players first then table
         for _ in range(self.amount_to_deal):
-            for player in self.players:
+            for player in self.players[1:]:
                 player.add_card(self.deck.deal_card())
 
-        self.table.add_card(self.deck.deal_card())
+        self.dealer.add_card(self.deck.deal_card())
