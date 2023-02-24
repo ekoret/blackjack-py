@@ -10,6 +10,7 @@ import pygame
 from deck import Deck
 from player import Dealer, Table, Player
 from settings import Settings, BlackjackSettings
+from player_menu import PlayerMenu
 
 """Abstract Game class"""
 
@@ -23,9 +24,6 @@ class Game(abc.ABC):
         self.framerate = self.settings.framerate
 
         self.deck = Deck()
-        self.dealer = Dealer(self)
-        self.table = Table(self)
-        self.players = [self.dealer]
         self.player_count = 0
         self.current_player_turn = 1
 
@@ -59,11 +57,16 @@ class BlackJack(Game):
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
 
+        self.dealer = Dealer(self)
+        self.table = Table(self)
+        self.players = [self.dealer]
+
         self.bg_colour = self.settings.bg_colour
         self.amount_to_deal = self.settings.amount_to_deal
         self.moves = self.settings.moves
 
         self.last_update = pygame.time.get_ticks()
+        self.player_menu = PlayerMenu()
 
     """The game loop"""
 
@@ -73,7 +76,20 @@ class BlackJack(Game):
         self.add_player("Jane")
         self.deal_game()
 
+        if (len(self.players) == 2):
+            self.players[1].x = self.settings.screen_width // 2
+        elif (len(self.players) == 3):
+            self.players[1].x = (self.settings.screen_width // 2) // 2
+            self.players[2].x = self.settings.screen_width // 2
+            + (self.settings.screen_width // 2) // 2
+        elif (len(self.players) == 4):
+            self.players[1].x = (self.settings.screen_width // 9)
+            self.players[2].x = (self.settings.screen_width // 2)
+            self.players[3].x = (self.settings.screen_width - 200)
+
         while (True):
+            current_player = self.players[self.current_player_turn]
+
             self.run_event_loop()
             self.screen.fill(self.bg_colour)  # draw bg
 
@@ -81,6 +97,7 @@ class BlackJack(Game):
             self.draw_players()
             self.draw_dealer()
             self.table.draw_remaining_cards()
+            self.player_menu.draw(self, current_player)
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
@@ -106,29 +123,9 @@ class BlackJack(Game):
             self.screen, self.dealer.sprite.animations["standing"]["current_frame"])
         self.dealer.draw()
 
-    """
-    TODO: needs to be refactored
-        - put players in positions depending on amount of players
-    """
-
     def draw_players(self):
-
-        total_players = len(self.players)
-        if (total_players == 2):
-            """Draw player in center"""
-            self.players[1].draw(self.settings.screen_width // 2)
-
-        elif (total_players == 3):
-            self.players[1].draw((self.settings.screen_width // 2) // 2)
-            self.players[2].draw((self.settings.screen_width // 2) +
-                                 (self.settings.screen_width // 2) // 2)
-
-        elif (total_players == 4):
-            self.players[1].draw(self.settings.screen_width // 9)
-            self.players[2].draw(self.settings.screen_width // 2)
-            self.players[3].draw(self.settings.screen_width - 200)
-
-    """Method for dealing the Blackjack game"""
+        for player in self.players:
+            player.draw()
 
     def deal_game(self):
         for _ in range(self.amount_to_deal):
