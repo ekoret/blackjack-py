@@ -74,8 +74,8 @@ class BlackJack(Game):
         self.add_player("Jane")
         self.deal_game()
 
-        button = GameButton(100, 100, 200, 100, "Hello", 20,
-                            "Arial", (230, 10, 10), (50, 50, 230))
+        # button = GameButton(100, 100, 200, 100, "Hello", 20,
+        #                     "Arial", (230, 10, 10), (50, 50, 230))
 
         bernard = DealerSprite()
 
@@ -105,7 +105,7 @@ class BlackJack(Game):
 
             """Draw players and dealer"""
             self.draw_players()
-            button.draw(self.screen)
+            # button.draw(self.screen)
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
