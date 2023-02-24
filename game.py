@@ -77,8 +77,6 @@ class BlackJack(Game):
         # button = GameButton(100, 100, 200, 100, "Hello", 20,
         #                     "Arial", (230, 10, 10), (50, 50, 230))
 
-        bernard = DealerSprite()
-
         while (True):
             """Event Loop"""
             for event in pygame.event.get():
@@ -92,19 +90,9 @@ class BlackJack(Game):
 
             self.screen.fill(self.bg_colour)  # draw bg
 
-            """Update Bernard animation"""
-            current_time = pygame.time.get_ticks()
-            if (current_time - self.last_update >= bernard.animation_cooldown):
-                bernard.animations["standing"]["current_frame"] += 1
-                self.last_update = current_time
-                if (bernard.animations["standing"]["current_frame"] >= bernard.animations["standing"]["steps"]):
-                    bernard.animations["standing"]["current_frame"] = 0
-            """Draw bernard"""
-            bernard.draw(
-                self.screen, bernard.animations["standing"]["current_frame"])
-
             """Draw players and dealer"""
             self.draw_players()
+            self.draw_dealer()
             # button.draw(self.screen)
 
             pygame.display.flip()  # update the screen
@@ -113,6 +101,18 @@ class BlackJack(Game):
     TODO: needs to be refactored
         - put players in positions depending on amount of players
     """
+
+    def draw_dealer(self):
+        """Update Bernard animation"""
+        current_time = pygame.time.get_ticks()
+        if (current_time - self.last_update >= self.dealer.sprite.animation_cooldown):
+            self.dealer.sprite.animations["standing"]["current_frame"] += 1
+            self.last_update = current_time
+            if (self.dealer.sprite.animations["standing"]["current_frame"] >= self.dealer.sprite.animations["standing"]["steps"]):
+                self.dealer.sprite.animations["standing"]["current_frame"] = 0
+        """Draw bernard"""
+        self.dealer.sprite.draw(
+            self.screen, self.dealer.sprite.animations["standing"]["current_frame"])
 
     def draw_players(self):
         self.dealer.draw()
