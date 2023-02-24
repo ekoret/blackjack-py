@@ -21,7 +21,7 @@ class DealerSprite(Sprite):
               exact pixel dimensions for each frame
         """
         self.sheet = pygame.image.load(
-            "images/sprite-sheets/bernard/alien-bernard-standing.png").convert_alpha()
+            "images/sprite-sheets/bernard/alien-bernard-standing.png")
 
         self.animations = {
             "standing": {
@@ -35,7 +35,7 @@ class DealerSprite(Sprite):
         screen.blit(image, (self.x, self.y))
 
     def get_image(self, frame, scale=1):
-        image = pygame.Surface((self.width, self.height)).convert_alpha()
+        image = pygame.Surface((self.width, self.height))
         image.blit(self.sheet, (0, 0),
                    ((frame * self.width), 0, self.width, self.height))
         # image = pygame.transform.scale(
