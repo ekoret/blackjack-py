@@ -15,8 +15,8 @@ class PlayerMenu:
         self.x = player.x - self.x_offset
         self.y = player.y - self.y_offset
         button_list = self.get_button_list()
-
-        for button in button_list:
+        self.button_list = button_list
+        for button in self.button_list:
             button.draw(self.game.screen)
 
     """

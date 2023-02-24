@@ -107,6 +107,17 @@ class BlackJack(Game):
             if (event.type == pygame.QUIT):
                 pygame.quit()
                 sys.exit()
+            elif (event.type == pygame.MOUSEBUTTONDOWN):
+                for button in self.player_menu.button_list:
+                    if (button.is_clicked(event.pos)):
+                        if (button.text.lower() == "hit"):
+                            # deal card to current player
+                            current_player = self.players[self.current_player_turn]
+                            current_player.add_card(self.deck.deal_card())
+
+                        if (button.text.lower() == "pass"):
+                            # pass current player turn
+                            self.current_player_turn += 1
 
     def draw_dealer(self):
         """Update sprite animation"""
