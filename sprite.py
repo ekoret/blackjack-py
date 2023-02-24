@@ -13,13 +13,9 @@ class DealerSprite(Sprite):
     def __init__(self, x=1200 // 2 + 72, y=25):
         super().__init__(x, y)
 
-        self.width = 72
-        self.height = 172
+        self.width = 58
+        self.height = 161
 
-        """
-        TODO: Sprite sheet for Bernard needs to be fixed to be
-              exact pixel dimensions for each frame
-        """
         self.sheet = pygame.image.load(
             "images/sprite-sheets/bernard/alien-bernard-standing.png")
 
