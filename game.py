@@ -85,10 +85,10 @@ class BlackJack(Game):
                 if (event.type == pygame.QUIT):
                     pygame.quit()
                     sys.exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    # Check if the button was clicked
-                    if button.is_clicked(pygame.mouse.get_pos()):
-                        print("Button clicked!")
+                # elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # # Check if the button was clicked
+                    # if button.is_clicked(pygame.mouse.get_pos()):
+                    #     print("Button clicked!")
 
             self.screen.fill(self.bg_colour)  # draw bg
 
