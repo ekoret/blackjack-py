@@ -27,6 +27,7 @@ class Game(abc.ABC):
         self.table = Table(self)
         self.players = [self.dealer]
         self.player_count = 0
+        self.current_player_turn = 1
 
     """Method for adding a player to the game"""
 
@@ -73,12 +74,7 @@ class BlackJack(Game):
         self.deal_game()
 
         while (True):
-            """Event Loop"""
-            for event in pygame.event.get():
-                if (event.type == pygame.QUIT):
-                    pygame.quit()
-                    sys.exit()
-
+            self.run_event_loop()
             self.screen.fill(self.bg_colour)  # draw bg
 
             """Draw players and dealer"""
@@ -88,6 +84,12 @@ class BlackJack(Game):
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
+
+    def run_event_loop(self):
+        for event in pygame.event.get():
+            if (event.type == pygame.QUIT):
+                pygame.quit()
+                sys.exit()
 
     def draw_dealer(self):
         """Update sprite animation"""
