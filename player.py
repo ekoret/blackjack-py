@@ -20,16 +20,19 @@ class Player:
 
     def draw(self):
         """
-        Draws the player's hand and name on the game screen.
+        Draws the player's hand, name, and sprite on the game screen.
 
         Returns:
             None
         """
-        player_label = GameText(self.name)
-        cards_label = GameText(self.get_hand())
+        self.draw_name_hand()
 
-        cards_label.draw(self.game.screen, self.x, self.y + 20)
-        player_label.draw(self.game.screen, self.x, self.y)
+    def draw_name_hand(self):
+        label = GameText(self.name)
+        hand = GameText(self.get_hand())
+
+        hand.draw(self.game.screen, self.x, self.y + 20)
+        label.draw(self.game.screen, self.x, self.y)
 
     def add_card(self, card):
         """
@@ -95,19 +98,6 @@ class Dealer(Player):
     def __str__(self):
         return f"Dealer({self.name})"
 
-    def draw(self):
-        """
-        Draws the dealer's name and hand on the game screen.
-
-        Returns:
-            None
-        """
-        dealer_label = GameText("Dealer")
-        player_cards_label = GameText(self.get_hand())
-
-        player_cards_label.draw(self.game.screen, self.x, self.y + 20)
-        dealer_label.draw(self.game.screen, self.x, self.y)
-
 
 class Table(Player):
     """
@@ -123,18 +113,6 @@ class Table(Player):
 
     def __str__(self):
         return f"Table({self.name})"
-
-    def draw(self):
-        """
-        Draws the table's name and hand on the game screen.
-
-        Returns:
-            None
-        """
-        table_label = GameText("Table")
-        table_cards_label = GameText(self.get_hand())
-        table_label.draw(self.game.screen, self.x, self.y)
-        table_cards_label.draw(self.game.screen, self.x, self.y + 20)
 
     def draw_remaining_cards(self, x, y):
         """
