@@ -82,6 +82,18 @@ class Player:
 
         return " - ".join(str(card) for card in self.hand)
 
+    def get_hand_total(self):
+        total = 0
+        for card in self.hand:
+            value = card.value
+            if (isinstance(value, int)):
+                total += value
+            elif (value in ("J", "Q", "K", "A")):
+                """For now A will be considered 10"""
+                total += 10
+
+        return total
+
 
 class Dealer(Player):
     """
