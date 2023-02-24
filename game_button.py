@@ -7,6 +7,7 @@ class GameButton:
     def __init__(self, x, y, width, height, text,
                  font_size=20,
                  font_name="Arial",
+                 text_colour=(255, 255, 255),
                  bg_colour=(150, 150, 150),
                  bg_colour_hover=(170, 10, 200)):
         self.x = x
@@ -17,13 +18,14 @@ class GameButton:
         self.font_size = font_size
         self.bg_colour = bg_colour
         self.bg_colour_hover = bg_colour_hover
+        self.text_colour = text_colour
 
         self.font = pygame.font.SysFont(font_name, self.font_size)
         # self.rect = self.surface.get_rect()
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.rect.center = (self.x + (self.width / 2),
                             self.y + (self.height / 2))
-        self.surface = self.font.render(self.text, True, self.bg_colour_hover)
+        self.surface = self.font.render(self.text, True, self.text_colour)
         self.surface_rect = self.surface.get_rect(center=self.rect.center)
 
     def draw(self, screen):
