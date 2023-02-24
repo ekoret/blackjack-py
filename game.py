@@ -96,7 +96,7 @@ class BlackJack(Game):
             """Draw players and dealer"""
             self.draw_players()
             self.draw_dealer()
-            self.table.draw_remaining_cards()
+            self.table.draw_remaining_cards(300, 300)
             self.player_menu.draw(current_player)
 
             pygame.display.flip()  # update the screen

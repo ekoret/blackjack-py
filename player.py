@@ -19,23 +19,44 @@ class Player:
         return f"Player({self.name})"
 
     def draw(self):
+        """
+        Draws the player's hand and name on the game screen.
+
+        Returns:
+            None
+        """
         player_label = GameText(self.name)
         cards_label = GameText(self.get_hand())
 
         cards_label.draw(self.game.screen, self.x, self.y + 20)
         player_label.draw(self.game.screen, self.x, self.y)
 
-    """Adds a single card to players hand"""
-
     def add_card(self, card):
+        """
+        Adds a single card to the player's hand.
+
+        Args:
+            card (Card): The card to add to the player's hand.
+
+        Returns:
+            None
+        """
         self.hand.append(card)
 
-    """Plays a card from the players hand
-    TODO: needs to be refactored
-        - take in an index
-    """
-
     def play_card(self, card):
+        """
+        Plays a card from the player's hand and adds it to the cards played pile.
+        TODO: needs to be refactored to take in an index
+
+        Args:
+            card (Card): The card to play.
+
+        Returns:
+            Card: The played card.
+
+        Raises:
+            ValueError: If the card is not in the player's hand.
+        """
         if card in self.hand:
             self.hand.remove(card)
             self.cards_played.append(card)
@@ -43,9 +64,16 @@ class Player:
         else:
             raise ValueError(f"Card not found in {self.name}'s hand")
 
-    """Returns string format of cards"""
-
     def get_hand(self, list=False):
+        """
+        Returns a string representation of the player's hand.
+
+        Args:
+            list (bool, optional): Whether to return the hand as a list. Defaults to False.
+
+        Returns:
+            str or list: The string or list representation of the player's hand.
+        """
         if list:
             return [str(card) for card in self.hand]
 
@@ -53,6 +81,10 @@ class Player:
 
 
 class Dealer(Player):
+    """
+    The dealer of the game.
+    """
+
     def __init__(self, game):
         super().__init__(game)
         self.name = "Dealer"
@@ -64,6 +96,12 @@ class Dealer(Player):
         return f"Dealer({self.name})"
 
     def draw(self):
+        """
+        Draws the dealer's name and hand on the game screen.
+
+        Returns:
+            None
+        """
         dealer_label = GameText("Dealer")
         player_cards_label = GameText(self.get_hand())
 
@@ -72,6 +110,10 @@ class Dealer(Player):
 
 
 class Table(Player):
+    """
+    The table for the game. Holds all cards that have been played
+    """
+
     def __init__(self, game):
         super().__init__(game)
         self.name = "Table"
@@ -83,27 +125,46 @@ class Table(Player):
         return f"Table({self.name})"
 
     def draw(self):
+        """
+        Draws the table's name and hand on the game screen.
+
+        Returns:
+            None
+        """
         table_label = GameText("Table")
         table_cards_label = GameText(self.get_hand())
         table_label.draw(self.game.screen, self.x, self.y)
         table_cards_label.draw(self.game.screen, self.x, self.y + 20)
 
-    def draw_remaining_cards(self):
-        x = 300
-        y = 200
+    def draw_remaining_cards(self, x, y):
+        """
+        Draw the remaining cards in the deck on the game screen. Because
+        cards are pulled from the bottom of the deck using List.pop(), we
+        copy and reverse the list to show the "correct" top of the deck.
 
+        Args:
+            x (int): The x-coordinate where the remaining cards will be drawn.
+            y (int): The y-coordinate where the remaining cards will be drawn.
+
+        Returns:
+            None
+        """
         remaining_cards = self.game.deck.get_remaining_cards()
+
+        remaining_cards = list(reversed(remaining_cards))
+
         remaining_deck_total = len(remaining_cards)
 
-        """
-        TODO: needs to be refactored
-            - looks ugly
-        """
-        first_half = '  '.join(remaining_cards[:remaining_deck_total // 2])
-        second_half = '  '.join(remaining_cards[remaining_deck_total // 2:])
+        """Splitting the deck for easier viewing"""
+        half = remaining_deck_total // 2
+        first_half = remaining_cards[:half]
+        first_half.insert(0, "Top Of Deck: ")  # helper text
+        second_half = remaining_cards[half:]
 
-        remaining_cards_first = GameText(first_half)
-        remaining_cards_second = GameText(second_half)
+        remaining_list = []
+        for i, cards in enumerate([first_half, second_half]):
+            cards_label = GameText(' '.join(cards))
+            remaining_list.append(cards_label)
 
-        remaining_cards_first.draw(self.game.screen, x, y)
-        remaining_cards_second.draw(self.game.screen, x, y + 20)
+        for i, row in enumerate(remaining_list):
+            row.draw(self.game.screen, x, y + (20 * i))
