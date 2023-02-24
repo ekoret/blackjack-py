@@ -84,30 +84,32 @@ class BlackJack(Game):
             """Draw players and dealer"""
             self.draw_players()
             self.draw_dealer()
+            self.table.draw_remaining_cards()
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
-    """
-    TODO: needs to be refactored
-        - put players in positions depending on amount of players
-    """
 
     def draw_dealer(self):
-        """Update Bernard animation"""
+        """Update sprite animation"""
         current_time = pygame.time.get_ticks()
+
         if (current_time - self.last_update >= self.dealer.sprite.animation_cooldown):
             self.dealer.sprite.animations["standing"]["current_frame"] += 1
             self.last_update = current_time
             if (self.dealer.sprite.animations["standing"]["current_frame"] >= self.dealer.sprite.animations["standing"]["steps"]):
                 self.dealer.sprite.animations["standing"]["current_frame"] = 0
-        """Draw bernard"""
+
+        """Draw sprite, hand, and label"""
         self.dealer.sprite.draw(
             self.screen, self.dealer.sprite.animations["standing"]["current_frame"])
-
-    def draw_players(self):
         self.dealer.draw()
 
-        self.table.draw_remaining_cards()
+    """
+    TODO: needs to be refactored
+        - put players in positions depending on amount of players
+    """
+
+    def draw_players(self):
 
         total_players = len(self.players)
         if (total_players == 2):
