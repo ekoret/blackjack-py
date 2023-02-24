@@ -12,18 +12,18 @@ class Player:
         self.name = name
         self.hand = []
         self.cards_played = []
+        self.x = -1
+        self.y = game.settings.screen_height - 200
 
     def __str__(self):
         return f"Player({self.name})"
 
-    def draw(self, x):
-        y = self.game.settings.screen_height - 200
-
+    def draw(self):
         player_label = GameText(self.name)
         cards_label = GameText(self.get_hand())
 
-        cards_label.draw(self.game.screen, x, y + 20)
-        player_label.draw(self.game.screen, x, y)
+        cards_label.draw(self.game.screen, self.x, self.y + 20)
+        player_label.draw(self.game.screen, self.x, self.y)
 
     """Adds a single card to players hand"""
 
@@ -57,19 +57,18 @@ class Dealer(Player):
         super().__init__(game)
         self.name = "Dealer"
         self.sprite = DealerSprite()
+        self.x = self.game.settings.screen_width // 2
+        self.y = 125
 
     def __str__(self):
         return f"Dealer({self.name})"
 
     def draw(self):
-        x = self.game.settings.screen_width // 2
-        y = 125
-
         dealer_label = GameText("Dealer")
         player_cards_label = GameText(self.get_hand())
 
-        player_cards_label.draw(self.game.screen, x, y + 20)
-        dealer_label.draw(self.game.screen, x, y)
+        player_cards_label.draw(self.game.screen, self.x, self.y + 20)
+        dealer_label.draw(self.game.screen, self.x, self.y)
 
 
 class Table(Player):
@@ -77,18 +76,17 @@ class Table(Player):
         super().__init__(game)
         self.name = "Table"
         self.graveyard = []
+        self.x = self.game.settings.screen_width // 2
+        self.y = self.game.settings.screen_height // 2
 
     def __str__(self):
         return f"Table({self.name})"
 
     def draw(self):
-        x = self.game.settings.screen_width // 2
-        y = self.game.settings.screen_height // 2
-
         table_label = GameText("Table")
         table_cards_label = GameText(self.get_hand())
-        table_label.draw(self.game.screen, x, y)
-        table_cards_label.draw(self.game.screen, x, y + 20)
+        table_label.draw(self.game.screen, self.x, self.y)
+        table_cards_label.draw(self.game.screen, self.x, self.y + 20)
 
     def draw_remaining_cards(self):
         x = 300
