@@ -30,9 +30,11 @@ class Player:
     def draw_name_hand(self):
         label = GameText(self.name)
         hand = GameText(self.get_hand())
+        total = GameText(f"Total: {self.get_hand_total()}")
 
-        hand.draw(self.game.screen, self.x, self.y + 20)
         label.draw(self.game.screen, self.x, self.y)
+        hand.draw(self.game.screen, self.x, self.y + 20)
+        total.draw(self.game.screen, self.x, self.y + 40)
 
     def add_card(self, card):
         """
