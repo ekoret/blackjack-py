@@ -11,6 +11,7 @@ from deck import Deck
 from player import Dealer, Table, Player
 from settings import Settings, BlackjackSettings
 from player_menu import PlayerMenu
+from game_menu import GameMenu
 
 """Abstract Game class"""
 
@@ -69,6 +70,8 @@ class BlackJack(Game):
 
         self.last_update = pygame.time.get_ticks()
 
+        self.game_menus = GameMenu(self)
+
     """The game loop"""
 
     def run_game(self):
@@ -110,6 +113,7 @@ class BlackJack(Game):
             self.draw_dealer()
             self.table.draw_remaining_cards(300, 300)
             self.player_menu.draw(current_player)
+            self.game_menus.draw_start_menu()
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
@@ -124,8 +128,8 @@ class BlackJack(Game):
                     if (button.is_clicked(event.pos)):
                         if (button.text.lower() == "hit"):
                             # deal card to current player
-                            current_player = self.players[self.current_player_turn]
-                            current_player.add_card(self.deck.deal_card())
+                            self.players[self.current_player_turn].add_card(
+                                self.deck.deal_card())
 
                         if (button.text.lower() == "stay"):
                             # pass current player turn
