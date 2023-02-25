@@ -86,8 +86,7 @@ class Player:
 
     def get_hand_total(self):
         total = 0
-        if (self.hand[0].lower() == "bust"):
-            return -1
+
         for card in self.hand:
             value = card.value
             if (isinstance(value, int)):
