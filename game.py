@@ -73,8 +73,8 @@ class BlackJack(Game):
 
     def run_game(self):
         self.add_player("John")
-        self.add_player("Jack")
-        self.add_player("Jane")
+        # self.add_player("Jack")
+        # self.add_player("Jane")
         self.deal_game()
 
         if (len(self.players) == 2):
@@ -88,29 +88,28 @@ class BlackJack(Game):
             self.players[2].x = (self.settings.screen_width // 2)
             self.players[3].x = (self.settings.screen_width - 200)
 
-        while (True):
-            if (self.game_running):
-                current_player = self.players[self.current_player_turn]
+        while (self.game_running):
+            current_player = self.players[self.current_player_turn]
 
-                if (current_player.get_hand_total() > 21):
-                    if (self.current_player_turn == 0):
-                        # here the game should end
-                        self.game_running = False
+            if (current_player.get_hand_total() > 21):
+                if (self.current_player_turn == 0):
+                    # here the game should end
+                    self.game_running = False
 
-                    current_player.lost = True
-                    self.current_player_turn += 1
-                    if (self.current_player_turn > self.player_count):
-                        self.current_player_turn = 0
-                    continue
+                current_player.lost = True
+                self.current_player_turn += 1
+                if (self.current_player_turn > self.player_count):
+                    self.current_player_turn = 0
+                continue
 
-                self.run_event_loop()
-                self.screen.fill(self.bg_colour)  # draw bg
+            self.run_event_loop()
+            self.screen.fill(self.bg_colour)  # draw bg
 
-                """Draw players and dealer"""
-                self.draw_players()
-                self.draw_dealer()
-                self.table.draw_remaining_cards(300, 300)
-                self.player_menu.draw(current_player)
+            """Draw players and dealer"""
+            self.draw_players()
+            self.draw_dealer()
+            self.table.draw_remaining_cards(300, 300)
+            self.player_menu.draw(current_player)
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
