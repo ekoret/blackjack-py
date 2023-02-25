@@ -115,7 +115,7 @@ class BlackJack(Game):
                             current_player = self.players[self.current_player_turn]
                             current_player.add_card(self.deck.deal_card())
 
-                        if (button.text.lower() == "pass"):
+                        if (button.text.lower() == "stay"):
                             # pass current player turn
                             self.current_player_turn += 1
 
