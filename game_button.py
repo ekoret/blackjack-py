@@ -20,29 +20,34 @@ class GameButton:
         self.bg_colour_hover = bg_colour_hover
         self.text_colour = text_colour
 
+        self.clicked = False
+
+        """Define font"""
         self.font = pygame.font.SysFont(font_name, self.font_size)
-        # self.rect = self.surface.get_rect()
+
+        """Create rect, set dimensions, set coordinates from center"""
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.rect.center = (self.x + (self.width / 2),
                             self.y + (self.height / 2))
+
+        """Create text, set styles, set coordinate from center of rect"""
         self.surface = self.font.render(self.text, True, self.text_colour)
         self.surface_rect = self.surface.get_rect(center=self.rect.center)
 
     def draw(self, screen):
-        if self.is_hovered(pygame.mouse.get_pos()):
-            colour = self.bg_colour_hover
-        else:
-            colour = self.bg_colour
+        mouse_pos = pygame.mouse.get_pos()
 
-        pygame.draw.rect(screen, colour, self.rect)
+        color = self.bg_colour
+
+        """Check if mouse is hovering over button then if button clicked"""
+        if (self.rect.collidepoint(mouse_pos)):
+            color = self.bg_colour_hover
+            if (pygame.mouse.get_pressed()[0] == 1 and self.clicked == False):
+                self.clicked = True
+                print('clicked')
+
+        if (pygame.mouse.get_pressed()[0] == 0):
+            self.clicked = False
+
+        pygame.draw.rect(screen, color, self.rect)
         screen.blit(self.surface, self.surface_rect)
-
-    def is_clicked(self, pos):
-        if pos[0] > self.x and pos[0] < self.x + self.width:
-            if pos[1] > self.y and pos[1] < self.y + self.height:
-                return True
-        return False
-        # return self.rect.collidepoint(pos) and pygame.mouse.get_pressed()[0]
-
-    def is_hovered(self, pos):
-        return self.rect.collidepoint(pos)

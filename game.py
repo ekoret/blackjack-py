@@ -12,6 +12,7 @@ from player import Dealer, Table, Player
 from settings import Settings, BlackjackSettings
 from player_menu import PlayerMenu
 from game_menu import GameMenu
+from game_button import GameButton
 
 """Abstract Game class"""
 
@@ -28,7 +29,11 @@ class Game(abc.ABC):
         self.player_count = 0
         self.current_player_turn = 1
         self.player_menu = PlayerMenu(self)
-        self.game_running = True
+
+        """Game states to control which screen is showing"""
+        self.game_running = False
+        self.game_paused = False
+        self.game_main_menu = True
 
     """Method for adding a player to the game"""
 
@@ -76,9 +81,15 @@ class BlackJack(Game):
 
     def run_game(self):
         self.add_player("John")
-        # self.add_player("Jack")
-        # self.add_player("Jane")
+
         self.deal_game()
+
+        main_menu = GameButton(100, 100, 200, 100, "Main Menu", 20,
+                               "Arial", (100, 100, 100), (200, 50, 50))
+        paused = GameButton(100, 100, 200, 100, "Paused", 20,
+                            "Arial", (100, 100, 100), (200, 50, 50))
+        game_running = GameButton(100, 100, 200, 100, "Game Running", 20,
+                                  "Arial", (100, 100, 100), (200, 50, 50))
 
         if (len(self.players) == 2):
             self.players[1].x = self.settings.screen_width // 2
@@ -91,29 +102,32 @@ class BlackJack(Game):
             self.players[2].x = (self.settings.screen_width // 2)
             self.players[3].x = (self.settings.screen_width - 200)
 
-        while (self.game_running):
-            current_player = self.players[self.current_player_turn]
+        while (True):
 
-            if (current_player.get_hand_total() > 21):
-                if (self.current_player_turn == 0):
-                    # here the game should end
-                    self.game_running = False
-
-                current_player.lost = True
-                self.current_player_turn += 1
-                if (self.current_player_turn > self.player_count):
-                    self.current_player_turn = 0
-                continue
-
-            self.run_event_loop()
             self.screen.fill(self.bg_colour)  # draw bg
 
-            """Draw players and dealer"""
-            self.draw_players()
-            self.draw_dealer()
-            self.table.draw_remaining_cards(300, 300)
-            self.player_menu.draw(current_player)
-            self.game_menus.draw_start_menu()
+            """Draw screens when applicable"""
+
+            if (self.game_main_menu):
+                # display main menu
+                main_menu.draw(self.screen)
+                pass
+
+            if (self.game_paused):
+                # display paused menu
+                paused.draw(self.screen)
+                pass
+
+            if (self.game_running):
+                # run the game
+                game_running.draw(self.screen)
+                pass
+
+            """
+            Event Loop
+            Listen for keyboard presses and mouse clicks
+            """
+            self.run_event_loop()
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
@@ -123,20 +137,14 @@ class BlackJack(Game):
             if (event.type == pygame.QUIT):
                 pygame.quit()
                 sys.exit()
-            elif (event.type == pygame.MOUSEBUTTONDOWN):
-                for button in self.player_menu.button_list:
-                    if (button.is_clicked(event.pos)):
-                        if (button.text.lower() == "hit"):
-                            # deal card to current player
-                            self.players[self.current_player_turn].add_card(
-                                self.deck.deal_card())
-
-                        if (button.text.lower() == "stay"):
-                            # pass current player turn
-                            self.current_player_turn += 1
+            elif (event.type == pygame.KEYDOWN):
+                if (event.key == pygame.K_SPACE):
+                    if (self.game_paused):
+                        self.game_paused = False
+                    else:
+                        self.game_paused = True
 
     def draw_dealer(self):
-        """Update sprite animation"""
         current_time = pygame.time.get_ticks()
 
         if (current_time - self.last_update >= self.dealer.sprite.animation_cooldown):
