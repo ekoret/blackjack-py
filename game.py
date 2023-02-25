@@ -111,17 +111,14 @@ class BlackJack(Game):
             if (self.game_main_menu):
                 # display main menu
                 main_menu.draw(self.screen)
-                pass
 
             if (self.game_paused):
                 # display paused menu
                 paused.draw(self.screen)
-                pass
 
             if (self.game_running):
                 # run the game
                 game_running.draw(self.screen)
-                pass
 
             """
             Event Loop
