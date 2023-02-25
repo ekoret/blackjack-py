@@ -25,4 +25,4 @@ class BlackjackSettings(Settings):
 
         """Blackjack specific attributes"""
         self.amount_to_deal = 2
-        self.moves = ["Hit", "Pass"]
+        self.moves = ["Hit", "Stay"]
