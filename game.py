@@ -90,6 +90,7 @@ class BlackJack(Game):
         while (True):
             current_player = self.players[self.current_player_turn]
             if (current_player.get_hand_total() > 21):
+                current_player.lost = True
                 self.current_player_turn += 1
                 continue
 

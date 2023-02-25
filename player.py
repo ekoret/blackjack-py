@@ -14,6 +14,7 @@ class Player:
         self.cards_played = []
         self.x = -1
         self.y = game.settings.screen_height - 200
+        self.lost = False
 
     def __str__(self):
         return f"Player({self.name})"
@@ -25,16 +26,22 @@ class Player:
         Returns:
             None
         """
-        self.draw_name_hand()
+        self.draw_player_labels()
 
-    def draw_name_hand(self):
-        label = GameText(self.name)
-        hand = GameText(self.get_hand())
-        total = GameText(f"Total: {self.get_hand_total()}")
+    def draw_player_labels(self):
+        text_list = [
+            GameText(self.name),
+            GameText(self.get_hand()),
+            GameText(f"Total: {self.get_hand_total()}"),
+        ]
 
-        label.draw(self.game.screen, self.x, self.y)
-        hand.draw(self.game.screen, self.x, self.y + 20)
-        total.draw(self.game.screen, self.x, self.y + 40)
+        bust_label = GameText("BUST")
+
+        for i, text in enumerate(text_list):
+            text.draw(self.game.screen, self.x, self.y + (20 * i))
+
+        if (self.lost):
+            bust_label.draw(self.game.screen, self.x, self.y + (20 * 3))
 
     def add_card(self, card):
         """
