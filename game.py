@@ -27,6 +27,7 @@ class Game(abc.ABC):
         self.player_count = 0
         self.current_player_turn = 1
         self.player_menu = PlayerMenu(self)
+        self.game_running = True
 
     """Method for adding a player to the game"""
 
@@ -88,20 +89,28 @@ class BlackJack(Game):
             self.players[3].x = (self.settings.screen_width - 200)
 
         while (True):
-            current_player = self.players[self.current_player_turn]
-            if (current_player.get_hand_total() > 21):
-                current_player.lost = True
-                self.current_player_turn += 1
-                continue
+            if (self.game_running):
+                current_player = self.players[self.current_player_turn]
 
-            self.run_event_loop()
-            self.screen.fill(self.bg_colour)  # draw bg
+                if (current_player.get_hand_total() > 21):
+                    if (self.current_player_turn == 0):
+                        # here the game should end
+                        self.game_running = False
 
-            """Draw players and dealer"""
-            self.draw_players()
-            self.draw_dealer()
-            self.table.draw_remaining_cards(300, 300)
-            self.player_menu.draw(current_player)
+                    current_player.lost = True
+                    self.current_player_turn += 1
+                    if (self.current_player_turn > self.player_count):
+                        self.current_player_turn = 0
+                    continue
+
+                self.run_event_loop()
+                self.screen.fill(self.bg_colour)  # draw bg
+
+                """Draw players and dealer"""
+                self.draw_players()
+                self.draw_dealer()
+                self.table.draw_remaining_cards(300, 300)
+                self.player_menu.draw(current_player)
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
