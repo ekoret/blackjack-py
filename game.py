@@ -89,6 +89,10 @@ class BlackJack(Game):
 
         while (True):
             current_player = self.players[self.current_player_turn]
+            if (current_player.get_hand_total() > 21):
+                current_player.hand.clear()
+                current_player.hand.append("BUST")
+                self.current_player_turn += 1
 
             self.run_event_loop()
             self.screen.fill(self.bg_colour)  # draw bg
