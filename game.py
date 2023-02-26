@@ -103,7 +103,6 @@ class BlackJack(Game):
             self.screen.fill(self.bg_colour)  # draw bg
 
             """Draw screens when applicable"""
-
             if (self.game_paused == True):
                 if (self.menu_state == "main"):
                     main_menu.draw(self.screen)
@@ -112,6 +111,7 @@ class BlackJack(Game):
                 self.draw_players()
                 current_player = self.players[self.current_player_turn]
                 self.player_menu.draw(current_player)
+
             """
             Event Loop
             Listen for keyboard presses and mouse clicks

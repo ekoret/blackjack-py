@@ -12,7 +12,6 @@ class PlayerMenu:
         self.text_colour = (255, 255, 255)
 
     def draw(self, player):
-        # button_list = []
         for i, move in enumerate(self.game.settings.moves):
             button = GameButton(player.x - self.x_offset, (player.y - (100 * i)) - 100,
                                 200, 80, move, 20, "Arial", (255, 255, 255), (15, 15, 15), (25, 25, 25))
