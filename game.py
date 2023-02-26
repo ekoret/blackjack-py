@@ -28,7 +28,6 @@ class Game(abc.ABC):
         self.deck = Deck()
         self.player_count = 0
         self.current_player_turn = 1
-        self.player_menu = PlayerMenu(self)
 
         """Game states to control which screen is showing"""
         self.game_paused = False
@@ -75,11 +74,14 @@ class BlackJack(Game):
         self.last_update = pygame.time.get_ticks()
 
         self.game_menus = GameMenu(self)
+        self.player_menu = PlayerMenu(self)
 
     """The game loop"""
 
     def run_game(self):
         self.add_player("John")
+        self.add_player("Jack")
+        self.add_player("Jane")
 
         self.deal_game()
 
@@ -107,7 +109,9 @@ class BlackJack(Game):
                     main_menu.draw(self.screen)
             else:
                 self.draw_dealer_sprite()
-
+                self.draw_players()
+                current_player = self.players[self.current_player_turn]
+                self.player_menu.draw(current_player)
             """
             Event Loop
             Listen for keyboard presses and mouse clicks
