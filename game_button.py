@@ -51,3 +51,8 @@ class GameButton:
 
         pygame.draw.rect(screen, color, self.rect)
         screen.blit(self.surface, self.surface_rect)
+
+    def handle_events(self, mouse_pos):
+        # handle events here like mouse over and click
+        # listen in event loop
+        pass
