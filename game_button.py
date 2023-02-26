@@ -35,24 +35,12 @@ class GameButton:
         self.surface_rect = self.surface.get_rect(center=self.rect.center)
 
     def draw(self, screen):
-        mouse_pos = pygame.mouse.get_pos()
-
-        color = self.bg_colour
-
-        """Check if mouse is hovering over button then if button clicked"""
-        if (self.rect.collidepoint(mouse_pos)):
-            color = self.bg_colour_hover
-            if (pygame.mouse.get_pressed()[0] == 1 and self.clicked == False):
-                self.clicked = True
-                print('clicked')
-
-        if (pygame.mouse.get_pressed()[0] == 0):
-            self.clicked = False
-
-        pygame.draw.rect(screen, color, self.rect)
+        pygame.draw.rect(screen, self.bg_colour, self.rect)
         screen.blit(self.surface, self.surface_rect)
 
-    def handle_events(self, mouse_pos):
+    def handle_events(self, event):
         # handle events here like mouse over and click
         # listen in event loop
-        pass
+        if (event.type == pygame.MOUSEBUTTONDOWN):
+            if self.rect.collidepoint(event.pos):
+                print(f"{self.text} clicked")

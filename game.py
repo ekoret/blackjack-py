@@ -136,6 +136,9 @@ class BlackJack(Game):
                     else:
                         self.game_paused = True
 
+            for button in self.player_menu.buttons:
+                button.handle_events(event)
+
     """TODO: needs to be refactored into Dealer"""
 
     def draw_dealer_sprite(self):
