@@ -12,7 +12,7 @@ from player import Dealer, Table, Player
 from settings import Settings, BlackjackSettings
 from player_menu import PlayerMenu
 from game_menu import GameMenu
-from game_button import GameButton
+from menu import MainMenu
 
 """Abstract Game class"""
 
@@ -31,9 +31,8 @@ class Game(abc.ABC):
         self.player_menu = PlayerMenu(self)
 
         """Game states to control which screen is showing"""
-        self.game_running = False
         self.game_paused = False
-        self.game_main_menu = True
+        self.menu_state = "main"
 
     """Method for adding a player to the game"""
 
@@ -84,12 +83,7 @@ class BlackJack(Game):
 
         self.deal_game()
 
-        main_menu = GameButton(100, 100, 200, 100, "Main Menu", 20,
-                               "Arial", (100, 100, 100), (200, 50, 50))
-        paused = GameButton(100, 100, 200, 100, "Paused", 20,
-                            "Arial", (100, 100, 100), (200, 50, 50))
-        game_running = GameButton(100, 100, 200, 100, "Game Running", 20,
-                                  "Arial", (100, 100, 100), (200, 50, 50))
+        main_menu = MainMenu()
 
         if (len(self.players) == 2):
             self.players[1].x = self.settings.screen_width // 2
@@ -108,17 +102,11 @@ class BlackJack(Game):
 
             """Draw screens when applicable"""
 
-            if (self.game_main_menu):
-                # display main menu
-                main_menu.draw(self.screen)
-
-            if (self.game_paused):
-                # display paused menu
-                paused.draw(self.screen)
-
-            if (self.game_running):
-                # run the game
-                game_running.draw(self.screen)
+            if (self.game_paused == True):
+                if (self.menu_state == "main"):
+                    main_menu.draw(self.screen)
+            else:
+                self.draw_dealer_sprite()
 
             """
             Event Loop
@@ -134,14 +122,19 @@ class BlackJack(Game):
             if (event.type == pygame.QUIT):
                 pygame.quit()
                 sys.exit()
-            elif (event.type == pygame.KEYDOWN):
+
+            if (event.type == pygame.KEYDOWN):
+                """Handle pause"""
                 if (event.key == pygame.K_SPACE):
+                    print("Space pressed")
                     if (self.game_paused):
                         self.game_paused = False
                     else:
                         self.game_paused = True
 
-    def draw_dealer(self):
+    """TODO: needs to be refactored into Dealer"""
+
+    def draw_dealer_sprite(self):
         current_time = pygame.time.get_ticks()
 
         if (current_time - self.last_update >= self.dealer.sprite.animation_cooldown):
@@ -153,7 +146,7 @@ class BlackJack(Game):
         """Draw sprite, hand, and label"""
         self.dealer.sprite.draw(
             self.screen, self.dealer.sprite.animations["standing"]["current_frame"])
-        self.dealer.draw()
+        # self.dealer.draw()
 
     def draw_players(self):
         for player in self.players:
