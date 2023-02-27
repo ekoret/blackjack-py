@@ -52,12 +52,21 @@ class GameButton:
 
                     """Increment player if 21 is hit"""
                     if (current_player.get_hand_total() == 21):
-                        game.current_player_turn += 1
+                        if (game.current_player_turn + 1 > len(game.players)):
+                            game.current_player_turn = 0
+                        else:
+                            game.current_player_turn += 1
 
                     """Handle bust"""
                     if (current_player.get_hand_total() > 21):
                         current_player.lost = True
-                        game.current_player_turn += 1
+                        if (game.current_player_turn + 1 > len(game.players)):
+                            game.current_player_turn = 0
+                        else:
+                            game.current_player_turn += 1
 
                 if (self.text.lower() == "stay"):
-                    game.current_player_turn += 1
+                    if (game.current_player_turn + 1 > len(game.players)):
+                        game.current_player_turn = 0
+                    else:
+                        game.current_player_turn += 1

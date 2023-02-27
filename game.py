@@ -109,6 +109,9 @@ class BlackJack(Game):
             else:
                 self.draw_dealer_sprite()
                 self.draw_players()
+
+                if (self.current_player_turn > len(self.players) - 1):
+                    self.current_player_turn = 0
                 current_player = self.players[self.current_player_turn]
                 self.player_menu.draw(current_player)
 
