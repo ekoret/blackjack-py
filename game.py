@@ -80,8 +80,8 @@ class BlackJack(Game):
 
     def run_game(self):
         self.add_player("John")
-        self.add_player("Jack")
-        self.add_player("Jane")
+        # self.add_player("Jack")
+        # self.add_player("Jane")
 
         self.deal_game()
 
@@ -110,10 +110,17 @@ class BlackJack(Game):
                 self.draw_dealer_sprite()
                 self.draw_players()
 
+                """Dealers turn"""
+                if (self.current_player_turn == 0):
+                    self.dealer.play()
+
                 if (self.current_player_turn > len(self.players) - 1):
                     self.current_player_turn = 0
                 current_player = self.players[self.current_player_turn]
-                self.player_menu.draw(current_player)
+
+                """Do not show player menu if player is dealer"""
+                if (self.current_player_turn != 0):
+                    self.player_menu.draw(current_player)
 
             """
             Event Loop

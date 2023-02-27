@@ -1,3 +1,4 @@
+import pygame
 
 from game_text import GameText
 from sprite import DealerSprite
@@ -122,6 +123,14 @@ class Dealer(Player):
 
     def __str__(self):
         return f"Dealer({self.name})"
+
+    def play(self):
+
+        while (self.get_hand_total() < 17):
+            self.add_card(self.game.deck.deal_card())
+
+        if (self.get_hand_total() > 21):
+            self.lost = True
 
 
 class Table(Player):
