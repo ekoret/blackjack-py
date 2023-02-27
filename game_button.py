@@ -20,8 +20,6 @@ class GameButton:
         self.bg_colour_hover = bg_colour_hover
         self.text_colour = text_colour
 
-        self.clicked = False
-
         """Define font"""
         self.font = pygame.font.SysFont(font_name, self.font_size)
 
