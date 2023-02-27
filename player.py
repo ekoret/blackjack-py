@@ -36,12 +36,15 @@ class Player:
         ]
 
         bust_label = GameText("BUST")
+        blackjack = GameText("BLACKJACK")
 
         for i, text in enumerate(text_list):
             text.draw(self.game.screen, self.x, self.y + (20 * i))
 
         if (self.lost):
             bust_label.draw(self.game.screen, self.x, self.y + (20 * 3))
+        if (self.get_hand_total() == 21):
+            blackjack.draw(self.game.screen, self.x, self.y + (20 * 4))
 
     def add_card(self, card):
         """

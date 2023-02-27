@@ -49,7 +49,15 @@ class GameButton:
                 if (self.text.lower() == "hit"):
                     """Deal card to player"""
                     current_player.add_card(game.deck.deal_card())
-                    if (current_player.get_hand_total() >= 21):
+
+                    """Increment player if 21 is hit"""
+                    if (current_player.get_hand_total() == 21):
                         game.current_player_turn += 1
+
+                    """Handle bust"""
+                    if (current_player.get_hand_total() > 21):
+                        current_player.lost = True
+                        game.current_player_turn += 1
+
                 if (self.text.lower() == "stay"):
                     game.current_player_turn += 1
