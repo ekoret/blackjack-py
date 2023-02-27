@@ -116,12 +116,12 @@ class BlackJack(Game):
             Event Loop
             Listen for keyboard presses and mouse clicks
             """
-            self.run_event_loop()
+            self.run_event_loop(self, current_player)
 
             pygame.display.flip()  # update the screen
             self.clock.tick(self.framerate)  # set the framerate
 
-    def run_event_loop(self):
+    def run_event_loop(self, game, current_player):
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
                 pygame.quit()
@@ -137,7 +137,7 @@ class BlackJack(Game):
                         self.game_paused = True
 
             for button in self.player_menu.buttons:
-                button.handle_events(event)
+                button.handle_events(event, game, current_player)
 
     """TODO: needs to be refactored into Dealer"""
 

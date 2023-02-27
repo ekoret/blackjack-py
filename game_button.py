@@ -44,11 +44,14 @@ class GameButton:
         pygame.draw.rect(screen, bg_colour, self.rect)
         screen.blit(self.surface, self.surface_rect)
 
-    def handle_events(self, event):
+    def handle_events(self, event, game, current_player):
         """Event loop for button clicks"""
         if (event.type == pygame.MOUSEBUTTONDOWN):
             if self.rect.collidepoint(event.pos):
                 if (self.text.lower() == "hit"):
-                    print("confirmed hit clicked")
+                    """Deal card to player"""
+                    current_player.add_card(game.deck.deal_card())
+                    if (current_player.get_hand_total() >= 21):
+                        game.current_player_turn += 1
                 if (self.text.lower() == "stay"):
-                    print("confirmed stay clicked")
+                    game.current_player_turn += 1
