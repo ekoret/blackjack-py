@@ -2,13 +2,14 @@ from game_button import GameButton
 
 
 class Menu:
-    def __init__(self, name=""):
+    def __init__(self, game, name=""):
+        self.game = game
         self.name = name
 
 
 class MainMenu(Menu):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game):
+        super().__init__(game)
         self.x = 500
         self.name = "Main Menu"
         self.resume_button = GameButton(
@@ -23,3 +24,18 @@ class MainMenu(Menu):
         self.resume_button.draw(screen)
         self.reset_button.draw(screen)
         self.quit_button.draw(screen)
+
+
+class GameEndMenu(Menu):
+    def __init__(self, game):
+        super().__init__(game)
+
+        self.name = "Game End"
+
+        self.buttons = [
+            GameButton(100, 100, 200, 100, "RESET")
+        ]
+
+    def draw(self, screen):
+        for button in self.buttons:
+            button.draw(screen)

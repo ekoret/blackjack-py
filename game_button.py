@@ -62,6 +62,10 @@ class GameButton:
                 if (self.text.lower() == "stay"):
                     self.handle_turn_change(game)
 
+                if (game.game_over == True):
+                    if (self.text.lower() == "reset"):
+                        print("reset")
+
     def handle_turn_change(self, game):
         if (game.current_player_turn + 1 > len(game.players)):
             game.current_player_turn = 0

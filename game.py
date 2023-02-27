@@ -12,7 +12,7 @@ from player import Dealer, Table, Player
 from settings import Settings, BlackjackSettings
 from player_menu import PlayerMenu
 from game_menu import GameMenu
-from menu import MainMenu
+from menu import MainMenu, GameEndMenu
 
 """Abstract Game class"""
 
@@ -32,6 +32,7 @@ class Game(abc.ABC):
         """Game states to control which screen is showing"""
         self.game_paused = False
         self.menu_state = "main"
+        self.game_over = False
 
     """Method for adding a player to the game"""
 
@@ -73,8 +74,11 @@ class BlackJack(Game):
 
         self.last_update = pygame.time.get_ticks()
 
+        """Menus"""
         self.game_menus = GameMenu(self)
         self.player_menu = PlayerMenu(self)
+        self.main_menu = MainMenu(self)
+        self.game_end_menu = GameEndMenu(self)
 
     """The game loop"""
 
@@ -84,8 +88,6 @@ class BlackJack(Game):
         # self.add_player("Jane")
 
         self.deal_game()
-
-        main_menu = MainMenu()
 
         if (len(self.players) == 2):
             self.players[1].x = self.settings.screen_width // 2
@@ -105,14 +107,21 @@ class BlackJack(Game):
             """Draw screens when applicable"""
             if (self.game_paused == True):
                 if (self.menu_state == "main"):
-                    main_menu.draw(self.screen)
+                    self.main_menu.draw(self.screen)
+
             else:
+                if (self.game_over == True):
+                    # show who wins or loses
+                    # buttons to reset or quit game
+                    self.game_end_menu.draw(self.screen)
+
                 self.draw_dealer_sprite()
                 self.draw_players()
 
-                """Dealers turn"""
+                """Dealers turn, end game"""
                 if (self.current_player_turn == 0):
                     self.dealer.play()
+                    self.game_over = True
 
                 if (self.current_player_turn > len(self.players) - 1):
                     self.current_player_turn = 0
@@ -147,6 +156,9 @@ class BlackJack(Game):
                         self.game_paused = True
 
             for button in self.player_menu.buttons:
+                button.handle_events(event, game, current_player)
+
+            for button in self.game_end_menu.buttons:
                 button.handle_events(event, game, current_player)
 
     """TODO: needs to be refactored into Dealer"""
