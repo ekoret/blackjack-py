@@ -4,12 +4,16 @@ import pygame
 
 
 class GameButton:
+    """Creates the game object GameButton. Handles events like button click and hover."""
+
+    # fmt: off
     def __init__(self, x, y, width, height, text,
                  font_size=20,
                  font_name="Arial",
                  text_colour=(255, 255, 255),
                  bg_colour=(150, 150, 150),
                  bg_colour_hover=(170, 10, 200)):
+        
         self.x = x
         self.y = y
         self.width = width
@@ -44,6 +48,7 @@ class GameButton:
 
     def handle_events(self, event, game, current_player):
         """Event loop for button clicks"""
+
         if (event.type == pygame.MOUSEBUTTONDOWN):
             if self.rect.collidepoint(event.pos):
                 if (self.text.lower() == "hit"):

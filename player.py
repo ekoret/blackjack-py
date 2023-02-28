@@ -1,10 +1,12 @@
-import pygame
+"""Module for creating and handling Player, Dealer, and Table"""
 
 from game_text import GameText
 from sprite import DealerSprite
 
 
 class Player:
+    """A player. Has access to the Game with methods to view hand, etc."""
+
     def __init__(self, game, name=""):
         """Pygame init"""
         self.game = game
@@ -42,9 +44,9 @@ class Player:
         for i, text in enumerate(text_list):
             text.draw(self.game.screen, self.x, self.y + (20 * i))
 
-        if (self.lost):
+        if self.lost:
             bust_label.draw(self.game.screen, self.x, self.y + (20 * 3))
-        if (self.get_hand_total() == 21):
+        if self.get_hand_total() == 21:
             blackjack.draw(self.game.screen, self.x, self.y + (20 * 4))
 
     def add_card(self, card):
@@ -77,10 +79,10 @@ class Player:
             self.hand.remove(card)
             self.cards_played.append(card)
             return card
-        else:
-            raise ValueError(f"Card not found in {self.name}'s hand")
 
-    def get_hand(self, list=False):
+        raise ValueError(f"Card not found in {self.name}'s hand")
+
+    def get_hand(self, get_list=False):
         """
         Returns a string representation of the player's hand.
 
@@ -90,20 +92,22 @@ class Player:
         Returns:
             str or list: The string or list representation of the player's hand.
         """
-        if list:
+        if get_list is True:
             return [str(card) for card in self.hand]
 
         return " - ".join(str(card) for card in self.hand)
 
     def get_hand_total(self):
+        """Calculate the total value of cards in the hand and return the total."""
+
         total = 0
 
         for card in self.hand:
             value = card.value
-            if (isinstance(value, int)):
+            if isinstance(value, int):
                 total += value
-            elif (value in ("J", "Q", "K", "A")):
-                """For now A will be considered 10"""
+            elif value in ("J", "Q", "K", "A"):
+                """For now A will be considered 10"""  # pylint: disable=pointless-string-statement
                 total += 10
 
         return total
@@ -125,11 +129,12 @@ class Dealer(Player):
         return f"Dealer({self.name})"
 
     def play(self):
+        """Dealer autoplay method. Pulls cards until dealer hits 17."""
 
-        while (self.get_hand_total() < 17):
+        while self.get_hand_total() < 17:
             self.add_card(self.game.deck.deal_card())
 
-        if (self.get_hand_total() > 21):
+        if self.get_hand_total() > 21:
             self.lost = True
 
 
@@ -167,7 +172,7 @@ class Table(Player):
 
         remaining_deck_total = len(remaining_cards)
 
-        """Splitting the deck for easier viewing"""
+        """Splitting the deck for easier viewing"""  # pylint: disable=pointless-string-statement
         half = remaining_deck_total // 2
         first_half = remaining_cards[:half]
         first_half.insert(0, "Top Of Deck: ")  # helper text
@@ -175,7 +180,7 @@ class Table(Player):
 
         remaining_list = []
         for i, cards in enumerate([first_half, second_half]):
-            cards_label = GameText(' '.join(cards))
+            cards_label = GameText(" ".join(cards))
             remaining_list.append(cards_label)
 
         for i, row in enumerate(remaining_list):

@@ -17,24 +17,20 @@ class DealerSprite(Sprite):
         self.height = 161
 
         self.sheet = pygame.image.load(
-            "images/sprite-sheets/bernard/alien-bernard-standing.png")
+            "images/sprite-sheets/bernard/alien-bernard-standing.png"
+        )
 
-        self.animations = {
-            "standing": {
-                "steps": 3,
-                "current_frame": 0
-            }
-        }
+        self.animations = {"standing": {"steps": 3, "current_frame": 0}}
 
     def draw(self, screen, frame):
         image = self.get_image(frame)
         screen.blit(image, (self.x, self.y))
 
-    def get_image(self, frame, scale=1):
+    def get_image(self, frame):
         image = pygame.Surface((self.width, self.height))
-        image.blit(self.sheet, (0, 0),
-                   ((frame * self.width), 0, self.width, self.height))
-        # image = pygame.transform.scale(
-        #     image, (self.width * scale, self.height * scale))
+        image.blit(
+            self.sheet, (0, 0), ((frame * self.width), 0, self.width, self.height)
+        )
+
         image.set_colorkey((0, 0, 0))
         return image
