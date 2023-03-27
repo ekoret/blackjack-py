@@ -1,28 +1,9 @@
-"""Classes for game settings"""
-
-import abc
+# Blackjack game settings file
 
 
-"""Abstract Settings class"""
-
-
-class Settings(abc.ABC):
+class Settings:
     def __init__(self):
-        self.font_name = "Arial"
-        self.framerate = 30
+        self.screen_width = 1280
+        self.screen_height = 720
 
-
-"""Blackjack settings"""
-
-
-class BlackjackSettings(Settings):
-
-    def __init__(self):
-        self.game_name = "Blackjack"
-        self.screen_width = 1200
-        self.screen_height = 800
-        self.bg_colour = (50, 50, 50)
-
-        """Blackjack specific attributes"""
-        self.amount_to_deal = 2
-        self.moves = ["Hit", "Stay"]
+        self.framerate = 60
