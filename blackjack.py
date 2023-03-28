@@ -1,8 +1,10 @@
 # Blackjack game file
 import pygame
+from icecream import ic
 
 from settings import Settings
-from card import Card
+from deck import Deck
+from player import Player, Dealer
 
 
 class Blackjack:
@@ -16,6 +18,11 @@ class Blackjack:
         self.clock = pygame.time.Clock()
         self.running = True
 
+        self.player = Player(self)
+        self.dealer = Dealer(self)
+        self.deck = Deck()
+        self.dealer.deal_game()
+
     def run_game(self):
         while self.running:
             self._check_events()
@@ -23,17 +30,14 @@ class Blackjack:
             self._draw_bg()
 
             # Render game here
-            self._test_card()
+            self._test_deck()
 
             self._update_screen()
 
         self._quit()
 
-    def _test_card(self):
-        card = Card("jack", "clubS")
-        group = pygame.sprite.Group()
-        group.add(card)
-        group.draw(self.screen)
+    def _test_deck(self):
+        ic({"player": self.player.cards, "dealer": self.dealer.cards})
 
     def _check_events(self):
         for event in pygame.event.get():

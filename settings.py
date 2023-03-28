@@ -7,3 +7,5 @@ class Settings:
         self.screen_height = 720
 
         self.framerate = 60
+
+        self.amount_to_deal = 2
