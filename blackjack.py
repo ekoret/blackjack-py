@@ -2,6 +2,7 @@
 import pygame
 
 from settings import Settings
+from card import Card
 
 
 class Blackjack:
@@ -22,10 +23,17 @@ class Blackjack:
             self._draw_bg()
 
             # Render game here
+            self._test_card()
 
             self._update_screen()
 
         self._quit()
+
+    def _test_card(self):
+        card = Card("jack", "clubS")
+        group = pygame.sprite.Group()
+        group.add(card)
+        group.draw(self.screen)
 
     def _check_events(self):
         for event in pygame.event.get():
