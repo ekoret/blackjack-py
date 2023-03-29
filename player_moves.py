@@ -29,6 +29,10 @@ class PlayerMoves:
             y_offset += 60
         return buttons
 
+    def hit(self, player):
+        card = self.game.deck.get_top_card()
+        player.add_card(card)
+
     def draw(self, screen):
         # container to wrap buttons
         pygame.draw.rect(screen, (77, 77, 77), self.container_rect, 0, 4)

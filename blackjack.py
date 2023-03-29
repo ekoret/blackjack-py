@@ -28,11 +28,15 @@ class Blackjack:
 
         self.player_moves = PlayerMoves(self)
 
+        self.player_list = [self.player, self.dealer]
+        self.current_player_turn = 0
+
     def run_game(self):
         while self.running:
             self._check_events()
 
             self._draw_bg()
+
             # Render game here
             self.player.draw_cards(self.screen)
             self.player.draw_hand_total(self.screen)
@@ -51,6 +55,11 @@ class Blackjack:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     self.running = False
+
+            # Check player move button events
+            for button in self.player_moves.buttons:
+                button.check_hover(event)
+                button.check_click(event)
 
     def _update_screen(self):
         pygame.display.flip()
