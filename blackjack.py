@@ -62,11 +62,22 @@ class Blackjack:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     self.running = False
+                if event.key == pygame.K_r:
+                    self._restart()
 
             # Check player move button events
             for button in self.player_moves.buttons:
                 button.check_hover(event)
                 button.check_click(event)
+
+    def _restart(self):
+        self.current_player_turn = 0
+        self.game_over = False
+        self.player = Player(self)
+        self.dealer = Dealer(self)
+        self.player_list = [self.player, self.dealer]
+        self.deck = Deck(self)
+        self.dealer.deal_game()
 
     def _update_screen(self):
         pygame.display.flip()

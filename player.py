@@ -34,18 +34,27 @@ class Player:
                 "BLACKJACK", True, self.game.settings.font_colour
             )
             blackjack_text_rect = blackjack_text.get_rect()
-            blackjack_text_rect.centerx = self.game.rect.width // 2
-            screen.blit(blackjack_text, (self.game.rect.width // 2, y_offset))
+            blackjack_text_rect.center = (
+                self.game.rect.width // 2,
+                self.game.rect.height - y_offset,
+            )
+            screen.blit(
+                blackjack_text,
+                blackjack_text_rect,
+            )
 
         if self.get_hand_total() > 21:
             bust_text = self.game.font.render(
                 "BUST", True, self.game.settings.font_colour
             )
             bust_text_rect = bust_text.get_rect()
-            bust_text_rect.centerx = self.game.rect.width // 2
+            bust_text_rect.center = (
+                self.game.rect.width // 2,
+                self.game.rect.height - y_offset,
+            )
             screen.blit(
                 bust_text,
-                (self.game.rect.width // 2, self.game.rect.height - y_offset),
+                bust_text_rect,
             )
 
     def draw_cards(self, screen):
@@ -97,16 +106,16 @@ class Dealer(Player):
                 "BLACKJACK", True, self.game.settings.font_colour
             )
             blackjack_text_rect = blackjack_text.get_rect()
-            blackjack_text_rect.centerx = self.game.rect.width // 2
-            screen.blit(blackjack_text, (self.game.rect.width // 2, y_offset))
+            blackjack_text_rect.center = (self.game.rect.width // 2, y_offset)
+            screen.blit(blackjack_text, blackjack_text_rect)
 
         if self.get_hand_total() > 21:
             bust_text = self.game.font.render(
                 "BUST", True, self.game.settings.font_colour
             )
             bust_text_rect = bust_text.get_rect()
-            bust_text_rect.centerx = self.game.rect.width // 2
-            screen.blit(bust_text, (self.game.rect.width // 2, y_offset))
+            bust_text_rect.center = (self.game.rect.width // 2, y_offset)
+            screen.blit(bust_text, bust_text_rect)
 
     def play(self):
         while self.get_hand_total() < 16:
