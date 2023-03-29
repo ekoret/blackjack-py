@@ -30,14 +30,12 @@ class Blackjack:
             self._draw_bg()
 
             # Render game here
-            self._test_deck()
+            self.player.draw_cards(self.screen)
+            self.dealer.draw_cards(self.screen)
 
             self._update_screen()
 
         self._quit()
-
-    def _test_deck(self):
-        ic({"player": self.player.cards, "dealer": self.dealer.cards})
 
     def _check_events(self):
         for event in pygame.event.get():
