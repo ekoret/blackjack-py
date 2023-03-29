@@ -19,6 +19,11 @@ class Card(pygame.sprite.Sprite):
         self.is_showing = True
 
         self.image = pygame.image.load(f"images/cards/{value}_of_{suit}.bmp")
+
+        self.size = self.image.get_size()
+        self.image = pygame.transform.scale(
+            self.image, (int(self.size[0] // 1.5), int(self.size[1] // 1.5))
+        )
         self.rect = self.image.get_rect()
 
     def hide_card(self):

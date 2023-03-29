@@ -20,7 +20,7 @@ class Blackjack:
 
         self.player = Player(self)
         self.dealer = Dealer(self)
-        self.deck = Deck()
+        self.deck = Deck(self)
         self.dealer.deal_game()
 
     def run_game(self):
@@ -47,7 +47,7 @@ class Blackjack:
         self.clock.tick(self.settings.framerate)  # limits FPS to 60
 
     def _draw_bg(self):
-        self.screen.fill("purple")
+        self.screen.fill((33, 33, 33))
 
     def _quit(self):
         pygame.quit()
