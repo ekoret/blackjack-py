@@ -20,6 +20,7 @@ class Blackjack:
         self.rect = self.screen.get_rect()
         self.clock = pygame.time.Clock()
         self.running = True
+        self.game_over = False
 
         self.player = Player(self)
         self.dealer = Dealer(self)
@@ -44,6 +45,13 @@ class Blackjack:
 
             self.dealer.draw_cards(self.screen)
             self.dealer.draw_hand_total(self.screen)
+
+            if self.current_player_turn == len(self.player_list) - 1:
+                self.dealer.play()
+
+            if self.game_over:
+                print("paused")
+
             self._update_screen()
 
         self._quit()

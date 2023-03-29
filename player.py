@@ -13,7 +13,7 @@ class Player:
     def add_card(self, card):
         self.cards.add(card)
 
-    def _get_hand_total(self):
+    def get_hand_total(self):
         total = 0
         for card in self.cards:
             value = card.value
@@ -25,7 +25,7 @@ class Player:
     def draw_hand_total(self, screen):
         y_offset = 310
         text = self.game.font.render(
-            f"Total: {self._get_hand_total()}", True, self.game.settings.font_colour
+            f"Total: {self.get_hand_total()}", True, self.game.settings.font_colour
         )
         screen.blit(text, (390, self.game.rect.height - y_offset))
 
@@ -69,6 +69,12 @@ class Dealer(Player):
     def draw_hand_total(self, screen):
         y_offset = 310
         text = self.game.font.render(
-            f"Total: {self._get_hand_total()}", True, self.game.settings.font_colour
+            f"Total: {self.get_hand_total()}", True, self.game.settings.font_colour
         )
         screen.blit(text, (390, y_offset))
+
+    def play(self):
+        while self.get_hand_total() < 16:
+            card = self.game.deck.get_top_card()
+            self.add_card(card)
+        self.game.game_over = True

@@ -41,6 +41,12 @@ class Button:
 
         if event.type == pygame.MOUSEBUTTONDOWN and hit:
             if self.button_text == "HIT":
-                self.game.player_moves.hit(
-                    self.game.player_list[self.game.current_player_turn]
-                )
+                current_player = self.game.player_list[self.game.current_player_turn]
+                self.game.player_moves.hit(current_player)
+
+                if current_player.get_hand_total() == 21:
+                    print("BLACKJACK")
+                    self.game.current_player_turn += 1
+                elif current_player.get_hand_total() > 21:
+                    print("BUST")
+                    self.game.current_player_turn += 1
