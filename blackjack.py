@@ -20,8 +20,7 @@ class Blackjack:
         self.rect = self.screen.get_rect()
         self.clock = pygame.time.Clock()
         self.running = True
-        self.screen.blit
-        self.font.render
+
         self.player = Player(self)
         self.dealer = Dealer(self)
         self.deck = Deck(self)
