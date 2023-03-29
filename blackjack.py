@@ -12,9 +12,11 @@ class Blackjack:
         # pygame setup
         pygame.init()
         self.settings = Settings()
+        self.font = pygame.font.SysFont("Arial Black", 16)
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height)
         )
+        self.rect = self.screen.get_rect()
         self.clock = pygame.time.Clock()
         self.running = True
 
@@ -31,7 +33,10 @@ class Blackjack:
 
             # Render game here
             self.player.draw_cards(self.screen)
+            self.player.draw_hand_total(self.screen)
+
             self.dealer.draw_cards(self.screen)
+            self.dealer.draw_hand_total(self.screen)
 
             self._update_screen()
 
