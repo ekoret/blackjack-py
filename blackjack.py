@@ -5,6 +5,7 @@ from icecream import ic
 from settings import Settings
 from deck import Deck
 from player import Player, Dealer
+from player_moves import PlayerMoves
 
 
 class Blackjack:
@@ -19,25 +20,27 @@ class Blackjack:
         self.rect = self.screen.get_rect()
         self.clock = pygame.time.Clock()
         self.running = True
-
+        self.screen.blit
+        self.font.render
         self.player = Player(self)
         self.dealer = Dealer(self)
         self.deck = Deck(self)
         self.dealer.deal_game()
+
+        self.player_moves = PlayerMoves(self)
 
     def run_game(self):
         while self.running:
             self._check_events()
 
             self._draw_bg()
-
             # Render game here
             self.player.draw_cards(self.screen)
             self.player.draw_hand_total(self.screen)
+            self.player_moves.draw(self.screen)
 
             self.dealer.draw_cards(self.screen)
             self.dealer.draw_hand_total(self.screen)
-
             self._update_screen()
 
         self._quit()
@@ -46,6 +49,9 @@ class Blackjack:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    self.running = False
 
     def _update_screen(self):
         pygame.display.flip()
