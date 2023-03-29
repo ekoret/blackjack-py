@@ -37,20 +37,19 @@ class Blackjack:
             self._check_events()
 
             self._draw_bg()
-
             # Render game here
             self.player.draw_cards(self.screen)
-            self.player.draw_hand_total(self.screen)
+            self.player.draw_stats(self.screen)
             self.player_moves.draw(self.screen)
 
             self.dealer.draw_cards(self.screen)
-            self.dealer.draw_hand_total(self.screen)
+            self.dealer.draw_stats(self.screen)
 
             if self.current_player_turn == len(self.player_list) - 1:
                 self.dealer.play()
 
             if self.game_over:
-                print("paused")
+                pass
 
             self._update_screen()
 

@@ -22,12 +22,31 @@ class Player:
             total += value
         return total
 
-    def draw_hand_total(self, screen):
+    def draw_stats(self, screen):
         y_offset = 310
         text = self.game.font.render(
             f"Total: {self.get_hand_total()}", True, self.game.settings.font_colour
         )
         screen.blit(text, (390, self.game.rect.height - y_offset))
+
+        if self.get_hand_total() == 21:
+            blackjack_text = self.game.font.render(
+                "BLACKJACK", True, self.game.settings.font_colour
+            )
+            blackjack_text_rect = blackjack_text.get_rect()
+            blackjack_text_rect.centerx = self.game.rect.width // 2
+            screen.blit(blackjack_text, (self.game.rect.width // 2, y_offset))
+
+        if self.get_hand_total() > 21:
+            bust_text = self.game.font.render(
+                "BUST", True, self.game.settings.font_colour
+            )
+            bust_text_rect = bust_text.get_rect()
+            bust_text_rect.centerx = self.game.rect.width // 2
+            screen.blit(
+                bust_text,
+                (self.game.rect.width // 2, self.game.rect.height - y_offset),
+            )
 
     def draw_cards(self, screen):
         x_offset = 0
@@ -66,12 +85,28 @@ class Dealer(Player):
             x_offset += x_offset_increment
         self.cards.draw(screen)
 
-    def draw_hand_total(self, screen):
+    def draw_stats(self, screen):
         y_offset = 310
-        text = self.game.font.render(
+        hand_total_text = self.game.font.render(
             f"Total: {self.get_hand_total()}", True, self.game.settings.font_colour
         )
-        screen.blit(text, (390, y_offset))
+        screen.blit(hand_total_text, (390, y_offset))
+
+        if self.get_hand_total() == 21:
+            blackjack_text = self.game.font.render(
+                "BLACKJACK", True, self.game.settings.font_colour
+            )
+            blackjack_text_rect = blackjack_text.get_rect()
+            blackjack_text_rect.centerx = self.game.rect.width // 2
+            screen.blit(blackjack_text, (self.game.rect.width // 2, y_offset))
+
+        if self.get_hand_total() > 21:
+            bust_text = self.game.font.render(
+                "BUST", True, self.game.settings.font_colour
+            )
+            bust_text_rect = bust_text.get_rect()
+            bust_text_rect.centerx = self.game.rect.width // 2
+            screen.blit(bust_text, (self.game.rect.width // 2, y_offset))
 
     def play(self):
         while self.get_hand_total() < 16:
