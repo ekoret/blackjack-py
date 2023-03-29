@@ -27,7 +27,7 @@ class Player:
         text = self.game.font.render(
             f"Total: {self._get_hand_total()}", True, self.game.settings.font_colour
         )
-        screen.blit(text, (400, self.game.rect.height - y_offset))
+        screen.blit(text, (390, self.game.rect.height - y_offset))
 
     def draw_cards(self, screen):
         x_offset = 0
@@ -55,7 +55,6 @@ class Dealer(Player):
                     break
                 card = self.game.deck.get_top_card()
                 player.add_card(card)
-        print(self.cards)
 
     def draw_cards(self, screen):
         x_offset = 0
@@ -72,4 +71,4 @@ class Dealer(Player):
         text = self.game.font.render(
             f"Total: {self._get_hand_total()}", True, self.game.settings.font_colour
         )
-        screen.blit(text, (400, y_offset))
+        screen.blit(text, (390, y_offset))
