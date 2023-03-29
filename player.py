@@ -51,8 +51,11 @@ class Dealer(Player):
 
         for _ in range(2):
             for player in players:
+                if len(players[1].cards) == 1 and len(players[0].cards) == 2:
+                    break
                 card = self.game.deck.get_top_card()
                 player.add_card(card)
+        print(self.cards)
 
     def draw_cards(self, screen):
         x_offset = 0
