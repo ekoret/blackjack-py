@@ -68,6 +68,10 @@ class Player:
             x_offset += x_offset_increment
         self.cards.draw(screen)
 
+    def draw(self, screen):
+        self.draw_cards(screen)
+        self.draw_stats(screen)
+
 
 class Dealer(Player):
     def __init__(self, game):
