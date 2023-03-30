@@ -48,3 +48,6 @@ class Button:
                     self.game.current_player_turn += 1
                 elif current_player.get_hand_total() > 21:
                     self.game.current_player_turn += 1
+
+            if self.button_text == "PASS":
+                self.game.current_player_turn += 1
