@@ -55,6 +55,9 @@ class Blackjack:
 
         self._quit()
 
+    def change_turn(self):
+        self.current_player_turn += 1
+
     def _check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
