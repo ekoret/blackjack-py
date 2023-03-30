@@ -42,12 +42,15 @@ class Button:
         if event.type == pygame.MOUSEBUTTONDOWN and hit and not self.game.game_over:
             if self.button_text == "HIT":
                 current_player = self.game.player_list[self.game.current_player_turn]
-                hand_total = current_player.get_hand_total()
 
                 # Adding card to current players hand
                 self.game.player_moves.hit(current_player)
 
-                if hand_total == 21 or hand_total > 21:
+                hand_total = current_player.get_hand_total()
+
+                if hand_total == 21:
+                    self.game.change_turn()
+                elif hand_total > 21:
                     self.game.change_turn()
 
             if self.button_text == "PASS":

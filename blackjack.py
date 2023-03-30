@@ -38,12 +38,10 @@ class Blackjack:
 
             self._draw_bg()
             # Render game here
-            self.player.draw_cards(self.screen)
-            self.player.draw_stats(self.screen)
+            self.player.draw(self.screen)
             self.player_moves.draw(self.screen)
 
-            self.dealer.draw_cards(self.screen)
-            self.dealer.draw_stats(self.screen)
+            self.dealer.draw(self.screen)
 
             if self.current_player_turn == len(self.player_list) - 1:
                 self.dealer.play()
