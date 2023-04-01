@@ -74,6 +74,7 @@ class Blackjack:
 
             if self.game_over:
                 self.game_over_screen.draw_winner(self.screen)
+                self.game_over_screen.draw_restart(self.screen)
 
             self._update_screen()
 
