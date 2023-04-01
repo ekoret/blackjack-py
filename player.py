@@ -125,4 +125,3 @@ class Dealer(Player):
         while self.get_hand_total() < 16:
             card = self.game.deck.get_top_card()
             self.add_card(card)
-        self.game.game_over = True

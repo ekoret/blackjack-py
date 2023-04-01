@@ -6,6 +6,7 @@ from settings import Settings
 from deck import Deck
 from player import Player, Dealer
 from player_moves import PlayerMoves
+from gameover import GameOver
 
 
 class Blackjack:
@@ -31,6 +32,9 @@ class Blackjack:
 
         self.player_list = [self.player, self.dealer]
         self.current_player_turn = 0
+        self.winner = None
+
+        self.game_over_screen = GameOver(self)
 
     def run_game(self):
         while self.running:
@@ -46,8 +50,30 @@ class Blackjack:
             if self.current_player_turn == len(self.player_list) - 1:
                 self.dealer.play()
 
+                player_hand_total = self.player.get_hand_total()
+                dealer_hand_total = self.dealer.get_hand_total()
+
+                if player_hand_total > 21 and dealer_hand_total > 21:
+                    self.winner = "No winner"
+                elif (player_hand_total < 22 and dealer_hand_total > 21) or (
+                    player_hand_total < 22
+                    and dealer_hand_total < 22
+                    and player_hand_total > dealer_hand_total
+                ):
+                    self.winner = "Player"
+                elif (player_hand_total > 21 and dealer_hand_total < 22) or (
+                    player_hand_total < 22
+                    and dealer_hand_total < 22
+                    and player_hand_total < dealer_hand_total
+                ):
+                    self.winner = "Dealer"
+                elif player_hand_total == dealer_hand_total:
+                    self.winner = "Push"
+
+                self.game_over = True
+
             if self.game_over:
-                pass
+                self.game_over_screen.draw_winner(self.screen)
 
             self._update_screen()
 
@@ -78,6 +104,7 @@ class Blackjack:
         self.dealer = Dealer(self)
         self.player_list = [self.player, self.dealer]
         self.deck = Deck(self)
+        self.winner = None
         self.dealer.deal_game()
 
     def _update_screen(self):
